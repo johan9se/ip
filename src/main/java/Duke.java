@@ -31,6 +31,7 @@ public class Duke {
 
     public static void listItems(){
         lineBreak();
+        System.out.println("\t Here are the tasks in your list:");
         for (int i=0;i<itemsInList;i++){
             System.out.printf("\t %d. [%s] %s\n", i+1, list[i].getStatusIcon(), list[i].description);
         }
