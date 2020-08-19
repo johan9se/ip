@@ -13,10 +13,14 @@ public class Duke {
         System.out.println("\t What can I do for you?");
         lineBreak();
     }
-
     public static void printGoodbye(){
         lineBreak();
         System.out.println("\t Bye. Hope to see you again soon!");
+        lineBreak();
+    }
+    public static void catchError(){
+        lineBreak();
+        System.out.println("\t Something went wrong. Please try again.");
         lineBreak();
     }
 
@@ -54,8 +58,14 @@ public class Duke {
             if (line.equals("list")){
                 listItems();
             } else if (line.startsWith("done")) {
-                int taskID = Integer.parseInt((line.split(" "))[1]) - 1;
-                list[taskID].markAsDone();
+                try {
+                    int taskID = Integer.parseInt((line.split(" "))[1]) - 1; // assumes command = "done {int}"
+                    if (0 <= taskID && taskID < itemsInList){
+                        list[taskID].markAsDone();
+                    } else {catchError();} // out of range id
+                } catch (Exception e){ // to catch if list id (int) is not provided
+                    catchError();
+                }
             } else {
                 Task t = new Task(line);
                 addNewListItem(t);
