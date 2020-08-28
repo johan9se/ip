@@ -41,17 +41,13 @@ public class Duke {
     public static void echoItem(String item){
         lineBreak();
         System.out.println("\t added: " + item);
+//        Got it. I've added this task:
+//                [T][✗] borrow book
+//        Now you have 5 tasks in the list.
         lineBreak();
     }
 
     public static void main(String[] args) {
-//        String logo = " ____        _        \n"
-//                + "|  _ \\ _   _| | _____ \n"
-//                + "| | | | | | | |/ / _ \\\n"
-//                + "| |_| | |_| |   <  __/\n"
-//                + "|____/ \\__,_|_|\\_\\___|\n";
-//        System.out.println("Hello from\n" + logo);
-
         String logo =
                 "\t   .            *        .\n" +
                 "\t *    .     * .     *\n" +
@@ -78,8 +74,15 @@ public class Duke {
                 } catch (Exception e){ // to catch if list id (int) is not provided
                     catchError();
                 }
-            } else if (line.startsWith("todo")){
-                Task t = new ToDo(line.substring(line.indexOf(" "),line.length()));
+            } else {
+                Task t;
+                String description =line.substring(line.indexOf(" "));
+                ;
+                if (line.startsWith("todo")){
+                    t = new ToDo(description);
+                } else if (line.startsWith("deadline")) {
+                    t = new Deadline(description.replace("\\by", "(by:") + ")");
+                }
                 addNewListItem(t);
                 echoItem(t.description);
             }
