@@ -9,13 +9,13 @@ public class Duke {
     }
     public static void printGreeting(){
         lineBreak();
-        System.out.println("\t Hello! I'm Duke");
+        System.out.println("\t Hi! I'm Olaf!");
         System.out.println("\t What can I do for you?");
         lineBreak();
     }
     public static void printGoodbye(){
         lineBreak();
-        System.out.println("\t Bye. Hope to see you again soon!");
+        System.out.println("\t Byebye! Hope to see you again soon!");
         lineBreak();
     }
     public static void catchError(){
@@ -33,7 +33,7 @@ public class Duke {
         lineBreak();
         System.out.println("\t Here are the tasks in your list:");
         for (int i=0;i<itemsInList;i++){
-            System.out.printf("\t %d. [%s] %s\n", i+1, list[i].getStatusIcon(), list[i].description);
+            System.out.printf("\t %d. [%c][%s] %s\n", i+1, list[i].getLabel(), list[i].getStatusIcon(), list[i].description);
         }
         lineBreak();
     }
@@ -45,12 +45,23 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        System.out.println("Hello from\n" + logo);
+//        String logo = " ____        _        \n"
+//                + "|  _ \\ _   _| | _____ \n"
+//                + "| | | | | | | |/ / _ \\\n"
+//                + "| |_| | |_| |   <  __/\n"
+//                + "|____/ \\__,_|_|\\_\\___|\n";
+//        System.out.println("Hello from\n" + logo);
+
+        String logo =
+                "\t   .            *        .\n" +
+                "\t *    .     * .     *\n" +
+                "\t  .     *       .       *\n" +
+                "\t   *        \\|     .\n" +
+                "\t *  .      ('^')  v *    *\n" +
+                "\t        >--(  . )/     .   .\n" +
+                "\t .    *    (  .  )   *\n" +
+                "\t .. .  ...  '--``-` ... *  .";
+        System.out.println(logo);
 
         printGreeting();
         Scanner in = new Scanner(System.in);
@@ -67,11 +78,12 @@ public class Duke {
                 } catch (Exception e){ // to catch if list id (int) is not provided
                     catchError();
                 }
-            } else {
-                Task t = new Task(line);
+            } else if (line.startsWith("todo")){
+                Task t = new ToDo(line.substring(line.indexOf(" "),line.length()));
                 addNewListItem(t);
                 echoItem(t.description);
             }
+            //Task t = new Task(line);
             line = in.nextLine();
         }
         printGoodbye();

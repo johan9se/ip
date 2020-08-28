@@ -11,6 +11,10 @@ public class Task {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
+    public char getLabel(){
+        return 'X';
+    }
+
     public void markAsDone(){
         this.isDone = true;
         Duke.lineBreak();
