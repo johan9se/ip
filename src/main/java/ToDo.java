@@ -1,12 +1,12 @@
-public class ToDo extends Task{
-    public String description;
+public class ToDo extends Task {
+    protected String description;
 
-    public ToDo(String description){
+    public ToDo(String description) {
         super(description);
     }
 
     @Override
-    public char getLabel() {
-        return 'T';
+    public String toString() {
+        return "[T]" + super.toString();
     }
 }
