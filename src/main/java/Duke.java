@@ -1,16 +1,34 @@
 import java.util.Scanner;
 
 public class Duke {
+    private static final String COMMAND_LIST_WORD = "list";
+    private static final String COMMAND_TODO_WORD = "todo";
+    private static final String COMMAND_DEADLINE_WORD = "deadline";
+    private static final String COMMAND_EVENT_WORD = "event";
+    private static final String COMMAND_DONE_WORD = "done";
+    private static final String COMMAND_EXIT_WORD = "bye";
+
+    private static final String LOGO = "\t   .            *        .\n" +
+                                        "\t *    .     * .     *\n" +
+                                        "\t  .         ___  .        *\n" +
+                                        "\t   *      _[___]_   .\n" +
+                                        "\t *  .      ('▻') v *    *\n" +
+                                        "\t        >--( . )/     .     .\n" +
+                                        "\t .    *   (  :  )   *\n" +
+                                        "\t .. . ...  '--`-` ... *  .";
+
+
     private static Task[] list = new Task[100];
     private static int itemsInList = 0;
 
     public static void lineBreak() {
         System.out.println("\t_________________________________");
     }
+
     public static void printGreeting() {
+        System.out.println(LOGO);
         lineBreak();
-        System.out.println("\t Hi! I'm Olaf!");
-        System.out.println("\t What can I do for you?");
+        System.out.println("\t Hi! I'm Olaf!\n\t What can I do for you?");
         lineBreak();
     }
     public static void printGoodbye() {
@@ -18,15 +36,72 @@ public class Duke {
         System.out.println("\t Byebye! Hope to see you again soon!");
         lineBreak();
     }
-    public static void catchError() {
+    public static void printErrorMessage() {
         lineBreak();
         System.out.println("\t Oops! Something went wrong. Please try again.");
         lineBreak();
     }
 
+    public static void executeCommand(String userInput) {
+        try {
+            final String[] commandAndParams = splitCommandWordAndArgs(userInput);
+            final String command = commandAndParams[0];
+            final String commandArgs = commandAndParams[1];
+            switch (command) {
+            case COMMAND_TODO_WORD:
+                addNewTodo(commandArgs);
+                break;
+            case COMMAND_DEADLINE_WORD:
+                addNewDeadline(commandArgs);
+                break;
+            case COMMAND_EVENT_WORD:
+                addNewEvent(commandArgs);
+                break;
+            case COMMAND_LIST_WORD:
+                listItems();
+                break;
+            case COMMAND_DONE_WORD:
+                markTaskAsDone(commandArgs);
+                break;
+            default:
+                printErrorMessage();
+                break;
+            }
+        } catch (Exception e) {
+                printErrorMessage();
+        }
+    }
+
+    public static String[] splitCommandWordAndArgs(String rawUserInput) {
+        final String[] split = rawUserInput.trim().split(" ", 2);
+        return split.length == 2 ? split : new String[] { split[0] , "" }; // else case: no parameters
+    }
+
     public static void addNewListItem(Task item) {
         list[itemsInList] = item;
         itemsInList++;
+    }
+
+    public static void addNewTodo(String args) {
+        Task t = new ToDo(args);
+        addNewListItem(t);
+        echoNewlyAddedItem(t);
+    }
+
+    public static void addNewDeadline(String args) {
+        String description = args.substring(0, args.indexOf("\\by"));
+        String by = args.substring(args.indexOf("\\by")+3);
+        Task t = new Deadline(description, by);
+        addNewListItem(t);
+        echoNewlyAddedItem(t);
+    }
+
+    public static void addNewEvent(String args) {
+        String description = args.substring(0, args.indexOf("\\at"));
+        String at = args.substring(args.indexOf("\\at")+3);
+        Task t = new Event(description, at);
+        addNewListItem(t);
+        echoNewlyAddedItem(t);
     }
 
     public static void listItems() {
@@ -38,7 +113,7 @@ public class Duke {
         lineBreak();
     }
 
-    public static void echoItem(Task item) {
+    public static void echoNewlyAddedItem(Task item) {
         lineBreak();
         System.out.println("\t Got it! I've added this task:");
         System.out.println("\t   " + item.toString());
@@ -46,61 +121,20 @@ public class Duke {
         lineBreak();
     }
 
-    public static void main(String[] args) {
-        String logo =
-                "\t   .            *        .\n" +
-                "\t *    .     * .     *\n" +
-                "\t  .     *       .       *\n" +
-                "\t   *        \\|     .\n" +
-                "\t *  .      ('^')  v *    *\n" +
-                "\t        >--(  . )/     .   .\n" +
-                "\t .    *    (  .  )   *\n" +
-                "\t .. .  ...  '--``-` ... *  .";
-        System.out.println(logo);
+    public static void markTaskAsDone(String listNumber) {
+        int taskID = Integer.parseInt(listNumber) - 1; // assumes command = "done {int}"
+        if (0 <= taskID && taskID < itemsInList) {
+            list[taskID].markAsDone();
+        }
+    }
 
+    public static void main(String[] args) {
         printGreeting();
         Scanner in = new Scanner(System.in);
-        String line = in.nextLine();
-        while (!line.equals("bye")) {
-            if (line.equals("list")) {
-                listItems();
-            } else if (line.startsWith("done")) {
-                try {
-                    int taskID = Integer.parseInt((line.split(" "))[1]) - 1; // assumes command = "done {int}"
-                    if (0 <= taskID && taskID < itemsInList) {
-                        list[taskID].markAsDone();
-                    } else {catchError();} // out of range id
-                } catch (Exception e) { // if list id (int) is not provided
-                    catchError();
-                }
-            } else {
-                Task t;
-                String taskType = line.split(" ")[0];
-                String description;
-
-                switch (taskType) {
-                case "todo":
-                    description = line.substring(line.indexOf(" ")+1);
-                    t = new ToDo(description);
-                    break;
-                case "deadline":
-                    description = line.substring(line.indexOf(" ")+1, line.indexOf("\\by"));
-                    String by = line.substring(line.indexOf("\\by")+3);
-                    t = new Deadline(description, by);
-                    break;
-                case "event":
-                    description = line.substring(line.indexOf(" ")+1, line.indexOf("\\at"));
-                    String at = line.substring(line.indexOf("\\at")+3);
-                    t = new Event(description, at);
-                    break;
-                default:
-                    t = new Task(line);
-                    break;
-                }
-                addNewListItem(t);
-                echoItem(t);
-            }
-            line = in.nextLine();
+        String inputLine = in.nextLine();
+        while (!inputLine.equals(COMMAND_EXIT_WORD)) {
+            executeCommand(inputLine);
+            inputLine = in.nextLine();
         }
         printGoodbye();
     }
