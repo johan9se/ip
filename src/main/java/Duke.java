@@ -18,28 +18,39 @@ public class Duke {
                                         "\t .. . ...  '--`-` ... *  .";
 
 
-    private static Task[] list = new Task[100];
+    private static final Task[] list = new Task[100];
     private static int itemsInList = 0;
 
-    public static void lineBreak() {
+    public static void printLineBreak() {
         System.out.println("\t_________________________________");
     }
 
     public static void printGreeting() {
         System.out.println(LOGO);
-        lineBreak();
+        printLineBreak();
         System.out.println("\t Hi! I'm Olaf!\n\t What can I do for you?");
-        lineBreak();
+        printLineBreak();
     }
+
     public static void printGoodbye() {
-        lineBreak();
         System.out.println("\t Byebye! Hope to see you again soon!");
-        lineBreak();
+        printLineBreak();
     }
+
+    public static void printGuideMessage() {
+        System.out.println("\t Here are the commands you can use:");
+        System.out.println("\t todo {description}........................ to add a new task");
+        System.out.println("\t deadline {description} \\by {date time}.... to add a new task that needs to be done by a specific date/time");
+        System.out.println("\t event {description} \\at {date time}....... to add a new task that starts and ends at a specific date/time");
+        System.out.println("\t list...................................... to see your entire to-do list");
+        System.out.println("\t done [item num]........................... to check off something you have completed");
+        System.out.println("\t bye....................................... see you later alligator!");
+        printLineBreak();
+    }
+
     public static void printErrorMessage() {
-        lineBreak();
         System.out.println("\t Oops! Something went wrong. Please try again.");
-        lineBreak();
+        printLineBreak();
     }
 
     public static void executeCommand(String userInput) {
@@ -65,6 +76,7 @@ public class Duke {
                 break;
             default:
                 printErrorMessage();
+                printGuideMessage();
                 break;
             }
         } catch (Exception e) {
@@ -105,26 +117,30 @@ public class Duke {
     }
 
     public static void listItems() {
-        lineBreak();
-        System.out.println("\t Here are the tasks in your list:");
-        for (int i=0;i<itemsInList;i++) {
-            System.out.printf("\t %d. %s\n", i+1, list[i].toString());
+        if (itemsInList > 0) {
+            System.out.println("\t Here are the tasks in your list:");
+            for (int i=0;i<itemsInList;i++) {
+                System.out.printf("\t %d. %s\n", i+1, list[i].toString());
+            }
+        } else {
+            System.out.println("\t Your list is still empty! Start adding tasks now :)");
         }
-        lineBreak();
+        printLineBreak();
     }
 
     public static void echoNewlyAddedItem(Task item) {
-        lineBreak();
         System.out.println("\t Got it! I've added this task:");
         System.out.println("\t   " + item.toString());
-        System.out.println("\t Now you have " + itemsInList + " tasks in the list.");
-        lineBreak();
+        System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList>1 ? "s":""));
+        printLineBreak();
     }
 
     public static void markTaskAsDone(String listNumber) {
-        int taskID = Integer.parseInt(listNumber) - 1; // assumes command = "done {int}"
+        int taskID = Integer.parseInt(listNumber) - 1;
         if (0 <= taskID && taskID < itemsInList) {
             list[taskID].markAsDone();
+        } else {
+            printErrorMessage();
         }
     }
 
@@ -133,6 +149,7 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String inputLine = in.nextLine();
         while (!inputLine.equals(COMMAND_EXIT_WORD)) {
+            printLineBreak();
             executeCommand(inputLine);
             inputLine = in.nextLine();
         }
