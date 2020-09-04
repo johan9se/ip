@@ -133,11 +133,16 @@ public class Duke {
         try {
             String description = args.substring(0, args.indexOf("\\at"));
             String atDateTime = args.substring(args.indexOf("\\at")+3);
+            if (description.isEmpty() || atDateTime.isEmpty()) {
+                throw new DukeException();
+            }
             Task event = new Event(description, atDateTime);
             addNewListItem(event);
             echoNewlyAddedItem(event);
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("\t Please provide a date/time for this event description!");
+        } catch (DukeException e) {
+            System.out.println("\t Please provide all the details for this event!");
         }
     }
 
