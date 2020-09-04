@@ -8,6 +8,12 @@ public class Duke {
     private static final String COMMAND_DONE_WORD = "done";
     private static final String COMMAND_EXIT_WORD = "bye";
 
+    private static final String GENERAL_ERROR_MESSAGE = "\t Oops! Something went wrong. Please try again.";
+    private static final String INVALID_COMMAND_MESSAGE = "\t Ohno! The description of a '%s' cannot be empty :(";
+    private static final String DONT_UNDERSTAND_MESSAGE = "\t Uhm........I'm sorry I do not understand what that means.";
+    private static final String MISSING_DATETIME_MESSAGE = "\t Please provide a date/time for this %s description!";
+    private static final String MISSING_DETAILS_MESSAGE = "\t Please provide all the details for this %s!";
+
     private static final String LOGO = "\t   .            *        .\n" +
                                         "\t *    .     * .     *\n" +
                                         "\t  .         ___  .        *\n" +
@@ -33,6 +39,7 @@ public class Duke {
     }
 
     public static void printGoodbye() {
+        printLineBreak();
         System.out.println("\t Byebye! Hope to see you again soon!");
         printLineBreak();
     }
@@ -48,13 +55,8 @@ public class Duke {
         printLineBreak();
     }
 
-    public static void printErrorMessage() {
-        System.out.println("\t Oops! Something went wrong. Please try again.");
-        printLineBreak();
-    }
-
-    public static void printInvalidCommandMessage(String command) {
-        System.out.println("\t Ohno! The description of a '" + command +"' cannot be empty :(");
+    public static void printErrorMessage(String message, String... args) {
+        System.out.printf((message) + "\n", args);
         printLineBreak();
     }
 
@@ -80,14 +82,14 @@ public class Duke {
                 markTaskAsDone(commandArgs);
                 break;
             default:
-                printErrorMessage();
+                printErrorMessage(DONT_UNDERSTAND_MESSAGE);
                 printGuideMessage();
                 break;
             }
         } catch (NumberFormatException e) {
-            printErrorMessage();
+            printErrorMessage(GENERAL_ERROR_MESSAGE);
         } catch (DukeException e) {
-            printInvalidCommandMessage(e.command);
+            printErrorMessage(INVALID_COMMAND_MESSAGE, e.command);
         }
     }
 
@@ -111,19 +113,37 @@ public class Duke {
     }
 
     public static void addNewDeadline(String args) {
-        String description = args.substring(0, args.indexOf("\\by"));
-        String byDateTime = args.substring(args.indexOf("\\by")+3);
-        Task deadline = new Deadline(description, byDateTime);
-        addNewListItem(deadline);
-        echoNewlyAddedItem(deadline);
+        try {
+            String description = args.substring(0, args.indexOf("\\by"));
+            String byDateTime = args.substring(args.indexOf("\\by")+3);
+            if (description.isEmpty() || byDateTime.isEmpty()) {
+                throw new DukeException();
+            }
+            Task deadline = new Deadline(description, byDateTime);
+            addNewListItem(deadline);
+            echoNewlyAddedItem(deadline);
+        } catch (StringIndexOutOfBoundsException e) {
+            printErrorMessage(MISSING_DATETIME_MESSAGE, "deadline");
+        } catch (DukeException e) {
+            printErrorMessage(MISSING_DETAILS_MESSAGE, "deadline");
+        }
     }
 
     public static void addNewEvent(String args) {
-        String description = args.substring(0, args.indexOf("\\at"));
-        String atDateTime = args.substring(args.indexOf("\\at")+3);
-        Task event = new Event(description, atDateTime);
-        addNewListItem(event);
-        echoNewlyAddedItem(event);
+        try {
+            String description = args.substring(0, args.indexOf("\\at"));
+            String atDateTime = args.substring(args.indexOf("\\at")+3);
+            if (description.isEmpty() || atDateTime.isEmpty()) {
+                throw new DukeException();
+            }
+            Task event = new Event(description, atDateTime);
+            addNewListItem(event);
+            echoNewlyAddedItem(event);
+        } catch (StringIndexOutOfBoundsException e) {
+            printErrorMessage(MISSING_DATETIME_MESSAGE, "event");
+        } catch (DukeException e) {
+            printErrorMessage(MISSING_DETAILS_MESSAGE, "event");
+        }
     }
 
     public static void listItems() {
@@ -150,7 +170,7 @@ public class Duke {
         if (0 <= taskID && taskID < itemsInList) {
             list[taskID].markAsDone();
         } else {
-            printErrorMessage();
+            printErrorMessage(GENERAL_ERROR_MESSAGE);
         }
     }
 
