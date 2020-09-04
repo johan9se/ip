@@ -17,8 +17,8 @@ public class Duke {
                                         "\t .    *   (  :  )   *\n" +
                                         "\t .. . ...  '--`-` ... *  .";
 
-
-    private static final Task[] list = new Task[100];
+    private static final int MAX_TASK_LENGTH = 100;
+    private static final Task[] list = new Task[MAX_TASK_LENGTH];
     private static int itemsInList = 0;
 
     public static void printLineBreak() {
@@ -53,6 +53,11 @@ public class Duke {
         printLineBreak();
     }
 
+    public static void printInvalidCommandMessage(String command) {
+        System.out.println("\t Ohno! The description of a '" + command +"' cannot be empty :(");
+        printLineBreak();
+    }
+
     public static void executeCommand(String userInput) {
         try {
             final String[] commandAndParams = splitCommandWordAndArgs(userInput);
@@ -79,14 +84,19 @@ public class Duke {
                 printGuideMessage();
                 break;
             }
-        } catch (Exception e) {
-                printErrorMessage();
+        } catch (NumberFormatException e) {
+            printErrorMessage();
+        } catch (DukeException e) {
+            printInvalidCommandMessage(e.command);
         }
     }
 
-    public static String[] splitCommandWordAndArgs(String rawUserInput) {
+    public static String[] splitCommandWordAndArgs(String rawUserInput) throws DukeException {
         final String[] split = rawUserInput.trim().split(" ", 2);
-        return split.length == 2 ? split : new String[] { split[0] , "" }; // else case: no parameters
+        if (split[0].matches("todo|deadline|event") && split.length == 1) {
+            throw new DukeException(split[0]);
+        }
+        return split.length == 2 ? split : new String[] { split[0] , "" };
     }
 
     public static void addNewListItem(Task item) {
@@ -95,25 +105,25 @@ public class Duke {
     }
 
     public static void addNewTodo(String args) {
-        Task t = new ToDo(args);
-        addNewListItem(t);
-        echoNewlyAddedItem(t);
+        Task todo = new ToDo(args);
+        addNewListItem(todo);
+        echoNewlyAddedItem(todo);
     }
 
     public static void addNewDeadline(String args) {
         String description = args.substring(0, args.indexOf("\\by"));
-        String by = args.substring(args.indexOf("\\by")+3);
-        Task t = new Deadline(description, by);
-        addNewListItem(t);
-        echoNewlyAddedItem(t);
+        String byDateTime = args.substring(args.indexOf("\\by")+3);
+        Task deadline = new Deadline(description, byDateTime);
+        addNewListItem(deadline);
+        echoNewlyAddedItem(deadline);
     }
 
     public static void addNewEvent(String args) {
         String description = args.substring(0, args.indexOf("\\at"));
-        String at = args.substring(args.indexOf("\\at")+3);
-        Task t = new Event(description, at);
-        addNewListItem(t);
-        echoNewlyAddedItem(t);
+        String atDateTime = args.substring(args.indexOf("\\at")+3);
+        Task event = new Event(description, atDateTime);
+        addNewListItem(event);
+        echoNewlyAddedItem(event);
     }
 
     public static void listItems() {
@@ -146,8 +156,10 @@ public class Duke {
 
     public static void main(String[] args) {
         printGreeting();
+
         Scanner in = new Scanner(System.in);
         String inputLine = in.nextLine();
+
         while (!inputLine.equals(COMMAND_EXIT_WORD)) {
             printLineBreak();
             executeCommand(inputLine);
