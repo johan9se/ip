@@ -58,6 +58,11 @@ public class Duke {
         printLineBreak();
     }
 
+    public static void printDontUnderstandMessage() {
+        System.out.println("\t Uhm........I'm sorry I do not understand what that means.");
+        printLineBreak();
+    }
+
     public static void executeCommand(String userInput) {
         try {
             final String[] commandAndParams = splitCommandWordAndArgs(userInput);
@@ -80,7 +85,7 @@ public class Duke {
                 markTaskAsDone(commandArgs);
                 break;
             default:
-                printErrorMessage();
+                printDontUnderstandMessage();
                 printGuideMessage();
                 break;
             }
