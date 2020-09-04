@@ -1,3 +1,5 @@
+package duke;
+
 import java.util.Scanner;
 
 public class Duke {
@@ -18,7 +20,7 @@ public class Duke {
                                         "\t *    .     * .     *\n" +
                                         "\t  .         ___  .        *\n" +
                                         "\t   *      _[___]_   .\n" +
-                                        "\t *  .      ('▻') v *    *\n" +
+                                        "\t *  .      ('v') v *    *\n" +
                                         "\t        >--( . )/     .     .\n" +
                                         "\t .    *   (  :  )   *\n" +
                                         "\t .. . ...  '--`-` ... *  .";

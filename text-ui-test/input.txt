@@ -1,0 +1,15 @@
+list
+todo CG2027 homework
+todo ST2334 tutorial
+done 1
+done
+list
+deadline
+deadline assignment 2 \by sunday 2359
+event \at 1pm wednesday
+event section dinner \at 6pm
+list
+blah
+done 4
+list
+bye
