@@ -8,6 +8,12 @@ public class Duke {
     private static final String COMMAND_DONE_WORD = "done";
     private static final String COMMAND_EXIT_WORD = "bye";
 
+    private static final String GENERAL_ERROR_MESSAGE = "\t Oops! Something went wrong. Please try again.";
+    private static final String INVALID_COMMAND_MESSAGE = "\t Ohno! The description of a '%s' cannot be empty :(";
+    private static final String DONT_UNDERSTAND_MESSAGE = "\t Uhm........I'm sorry I do not understand what that means.";
+    private static final String MISSING_DATETIME_MESSAGE = "\t Please provide a date/time for this %s description!";
+    private static final String MISSING_DETAILS_MESSAGE = "\t Please provide all the details for this %s!";
+
     private static final String LOGO = "\t   .            *        .\n" +
                                         "\t *    .     * .     *\n" +
                                         "\t  .         ___  .        *\n" +
@@ -49,18 +55,8 @@ public class Duke {
         printLineBreak();
     }
 
-    public static void printErrorMessage() {
-        System.out.println("\t Oops! Something went wrong. Please try again.");
-        printLineBreak();
-    }
-
-    public static void printInvalidCommandMessage(String command) {
-        System.out.println("\t Ohno! The description of a '" + command +"' cannot be empty :(");
-        printLineBreak();
-    }
-
-    public static void printDontUnderstandMessage() {
-        System.out.println("\t Uhm........I'm sorry I do not understand what that means.");
+    public static void printErrorMessage(String message, String... args) {
+        System.out.printf((message) + "\n", args);
         printLineBreak();
     }
 
@@ -86,14 +82,14 @@ public class Duke {
                 markTaskAsDone(commandArgs);
                 break;
             default:
-                printDontUnderstandMessage();
+                printErrorMessage(DONT_UNDERSTAND_MESSAGE);
                 printGuideMessage();
                 break;
             }
         } catch (NumberFormatException e) {
-            printErrorMessage();
+            printErrorMessage(GENERAL_ERROR_MESSAGE);
         } catch (DukeException e) {
-            printInvalidCommandMessage(e.command);
+            printErrorMessage(INVALID_COMMAND_MESSAGE, e.command);
         }
     }
 
@@ -120,13 +116,17 @@ public class Duke {
         try {
             String description = args.substring(0, args.indexOf("\\by"));
             String byDateTime = args.substring(args.indexOf("\\by")+3);
+            if (description.isEmpty() || byDateTime.isEmpty()) {
+                throw new DukeException();
+            }
             Task deadline = new Deadline(description, byDateTime);
             addNewListItem(deadline);
             echoNewlyAddedItem(deadline);
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println("\t Please provide a date/time for this deadline description!");
+            printErrorMessage(MISSING_DATETIME_MESSAGE, "deadline");
+        } catch (DukeException e) {
+            printErrorMessage(MISSING_DETAILS_MESSAGE, "deadline");
         }
-
     }
 
     public static void addNewEvent(String args) {
@@ -140,9 +140,9 @@ public class Duke {
             addNewListItem(event);
             echoNewlyAddedItem(event);
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println("\t Please provide a date/time for this event description!");
+            printErrorMessage(MISSING_DATETIME_MESSAGE, "event");
         } catch (DukeException e) {
-            System.out.println("\t Please provide all the details for this event!");
+            printErrorMessage(MISSING_DETAILS_MESSAGE, "event");
         }
     }
 
@@ -170,7 +170,7 @@ public class Duke {
         if (0 <= taskID && taskID < itemsInList) {
             list[taskID].markAsDone();
         } else {
-            printErrorMessage();
+            printErrorMessage(GENERAL_ERROR_MESSAGE);
         }
     }
 
