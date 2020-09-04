@@ -33,6 +33,7 @@ public class Duke {
     }
 
     public static void printGoodbye() {
+        printLineBreak();
         System.out.println("\t Byebye! Hope to see you again soon!");
         printLineBreak();
     }
@@ -116,19 +117,28 @@ public class Duke {
     }
 
     public static void addNewDeadline(String args) {
-        String description = args.substring(0, args.indexOf("\\by"));
-        String byDateTime = args.substring(args.indexOf("\\by")+3);
-        Task deadline = new Deadline(description, byDateTime);
-        addNewListItem(deadline);
-        echoNewlyAddedItem(deadline);
+        try {
+            String description = args.substring(0, args.indexOf("\\by"));
+            String byDateTime = args.substring(args.indexOf("\\by")+3);
+            Task deadline = new Deadline(description, byDateTime);
+            addNewListItem(deadline);
+            echoNewlyAddedItem(deadline);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("\t Please provide a date/time for this deadline description!");
+        }
+
     }
 
     public static void addNewEvent(String args) {
-        String description = args.substring(0, args.indexOf("\\at"));
-        String atDateTime = args.substring(args.indexOf("\\at")+3);
-        Task event = new Event(description, atDateTime);
-        addNewListItem(event);
-        echoNewlyAddedItem(event);
+        try {
+            String description = args.substring(0, args.indexOf("\\at"));
+            String atDateTime = args.substring(args.indexOf("\\at")+3);
+            Task event = new Event(description, atDateTime);
+            addNewListItem(event);
+            echoNewlyAddedItem(event);
+        } catch (StringIndexOutOfBoundsException e) {
+            System.out.println("\t Please provide a date/time for this event description!");
+        }
     }
 
     public static void listItems() {

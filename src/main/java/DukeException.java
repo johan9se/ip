@@ -5,4 +5,8 @@ public class DukeException extends Exception {
     public DukeException(String command){
         this.command = command;
     }
+
+    public DukeException(){
+
+    }
 }
