@@ -78,16 +78,5 @@
 	 bye....................................... see you later alligator!
 	_________________________________
 	_________________________________
-	 Nice! I've marked this task as done:
-	   [✓] section dinner
-	_________________________________
-	_________________________________
-	 Here are the tasks in your list:
-	 1. [T][✓] CG2027 homework
-	 2. [T][✘] ST2334 tutorial
-	 3. [D][✘] assignment 2 (by: sunday 2359)
-	 4. [E][✓] section dinner (at: 6pm)
-	_________________________________
-	_________________________________
 	 Byebye! Hope to see you again soon!
 	_________________________________
