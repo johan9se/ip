@@ -19,7 +19,7 @@
 	 bye....................................... see you later alligator!
 	_________________________________
 	_________________________________
-	 Your list is still empty! Start adding tasks now :)
+	 Your list is empty! Start adding tasks now :)
 	_________________________________
 	_________________________________
 	 Got it! I've added this task:

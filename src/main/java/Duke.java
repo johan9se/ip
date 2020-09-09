@@ -8,6 +8,7 @@ public class Duke {
     private static final String COMMAND_TODO_WORD = "todo";
     private static final String COMMAND_DEADLINE_WORD = "deadline";
     private static final String COMMAND_EVENT_WORD = "event";
+    private static final String COMMAND_DELETE_WORD = "delete";
     private static final String COMMAND_DONE_WORD = "done";
     private static final String COMMAND_EXIT_WORD = "bye";
 
@@ -26,7 +27,7 @@ public class Duke {
                                         "\t .    *   (  :  )   *\n" +
                                         "\t .. . ...  '--`-` ... *  .";
 
-    private static ArrayList<Task> list = new ArrayList<>();
+    private static ArrayList<Task> list = new ArrayList<Task>();
     private static int itemsInList = 0;
 
     public static void printLineBreak() {
@@ -82,6 +83,9 @@ public class Duke {
                 break;
             case COMMAND_DONE_WORD:
                 markTaskAsDone(commandArgs);
+                break;
+            case COMMAND_DELETE_WORD:
+                deleteItem(commandArgs);
                 break;
             default:
                 printErrorMessage(DONT_UNDERSTAND_MESSAGE);
@@ -148,6 +152,20 @@ public class Duke {
         }
     }
 
+    public static void deleteItem(String listNumber) {
+        int taskID = Integer.parseInt(listNumber) - 1;
+        if (0 <= taskID && taskID < itemsInList) {
+            System.out.println("\t Okiedokie! This task has been removed:");
+            System.out.println("\t   " + list.remove(taskID).toString());
+            itemsInList--;
+            System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList>1 ? "s":""));
+            printLineBreak();
+        } else {
+            printErrorMessage(GENERAL_ERROR_MESSAGE);
+        }
+
+    }
+
     public static void listItems() {
         if (itemsInList > 0) {
             System.out.println("\t Here are the tasks in your list:");
@@ -155,7 +173,7 @@ public class Duke {
                 System.out.printf("\t %d. %s\n", i+1, list.get(i).toString());
             }
         } else {
-            System.out.println("\t Your list is still empty! Start adding tasks now :)");
+            System.out.println("\t Your list is empty! Start adding tasks now :)");
         }
         printLineBreak();
     }
