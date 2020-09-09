@@ -17,7 +17,8 @@ public class Task {
         this.isDone = true;
         System.out.println("\t Nice! I've marked this task as done:");
         System.out.printf("\t   [%s] %s\n", this.getStatusIcon(), this.description);
-        System.out.println("\t_________________________________");    }
+        System.out.println("\t_________________________________");
+    }
 
     @Override
     public String toString() {

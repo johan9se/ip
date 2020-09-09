@@ -15,6 +15,7 @@
 	 deadline {description} \by {date time}.... to add a new task that needs to be done by a specific date/time
 	 event {description} \at {date time}....... to add a new task that starts and ends at a specific date/time
 	 list...................................... to see your entire to-do list
+	 delete [item num]........................... to remove item off the list
 	 done [item num]........................... to check off something you have completed
 	 bye....................................... see you later alligator!
 	_________________________________
@@ -60,11 +61,18 @@
 	 Now you have 4 tasks in the list.
 	_________________________________
 	_________________________________
+	 Oops! Something went wrong. Please try again.
+	_________________________________
+	_________________________________
+	 Okiedokie! This task has been removed:
+	   [E][✘] section dinner (at: 6pm)
+	 Now you have 3 tasks in the list.
+	_________________________________
+	_________________________________
 	 Here are the tasks in your list:
 	 1. [T][✓] CG2027 homework
 	 2. [T][✘] ST2334 tutorial
 	 3. [D][✘] assignment 2 (by: sunday 2359)
-	 4. [E][✘] section dinner (at: 6pm)
 	_________________________________
 	_________________________________
 	 Uhm........I'm sorry I do not understand what that means.
@@ -74,6 +82,7 @@
 	 deadline {description} \by {date time}.... to add a new task that needs to be done by a specific date/time
 	 event {description} \at {date time}....... to add a new task that starts and ends at a specific date/time
 	 list...................................... to see your entire to-do list
+	 delete [item num]........................... to remove item off the list
 	 done [item num]........................... to check off something you have completed
 	 bye....................................... see you later alligator!
 	_________________________________

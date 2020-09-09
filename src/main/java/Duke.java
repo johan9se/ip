@@ -53,6 +53,7 @@ public class Duke {
         System.out.println("\t deadline {description} \\by {date time}.... to add a new task that needs to be done by a specific date/time");
         System.out.println("\t event {description} \\at {date time}....... to add a new task that starts and ends at a specific date/time");
         System.out.println("\t list...................................... to see your entire to-do list");
+        System.out.println("\t delete [item num]........................... to remove item off the list");
         System.out.println("\t done [item num]........................... to check off something you have completed");
         System.out.println("\t bye....................................... see you later alligator!");
         printLineBreak();
@@ -152,20 +153,6 @@ public class Duke {
         }
     }
 
-    public static void deleteItem(String listNumber) {
-        int taskID = Integer.parseInt(listNumber) - 1;
-        if (0 <= taskID && taskID < itemsInList) {
-            System.out.println("\t Okiedokie! This task has been removed:");
-            System.out.println("\t   " + list.remove(taskID).toString());
-            itemsInList--;
-            System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList>1 ? "s":""));
-            printLineBreak();
-        } else {
-            printErrorMessage(GENERAL_ERROR_MESSAGE);
-        }
-
-    }
-
     public static void listItems() {
         if (itemsInList > 0) {
             System.out.println("\t Here are the tasks in your list:");
@@ -183,6 +170,20 @@ public class Duke {
         System.out.println("\t   " + item.toString());
         System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList>1 ? "s":""));
         printLineBreak();
+    }
+
+    public static void deleteItem(String listNumber) {
+        int taskID = Integer.parseInt(listNumber) - 1;
+        if (0 <= taskID && taskID < itemsInList) {
+            System.out.println("\t Okiedokie! This task has been removed:");
+            System.out.println("\t   " + list.remove(taskID).toString());
+            itemsInList--;
+            System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList>1 ? "s":""));
+            printLineBreak();
+        } else {
+            printErrorMessage(GENERAL_ERROR_MESSAGE);
+        }
+
     }
 
     public static void markTaskAsDone(String listNumber) {
