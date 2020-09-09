@@ -1,6 +1,7 @@
 import duke.*;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
     private static final String COMMAND_LIST_WORD = "list";
@@ -25,8 +26,7 @@ public class Duke {
                                         "\t .    *   (  :  )   *\n" +
                                         "\t .. . ...  '--`-` ... *  .";
 
-    private static final int MAX_TASK_LENGTH = 100;
-    private static final Task[] list = new Task[MAX_TASK_LENGTH];
+    private static ArrayList<Task> list = new ArrayList<>();
     private static int itemsInList = 0;
 
     public static void printLineBreak() {
@@ -104,7 +104,7 @@ public class Duke {
     }
 
     public static void addNewListItem(Task item) {
-        list[itemsInList] = item;
+        list.add(item);
         itemsInList++;
     }
 
@@ -152,7 +152,7 @@ public class Duke {
         if (itemsInList > 0) {
             System.out.println("\t Here are the tasks in your list:");
             for (int i=0;i<itemsInList;i++) {
-                System.out.printf("\t %d. %s\n", i+1, list[i].toString());
+                System.out.printf("\t %d. %s\n", i+1, list.get(i).toString());
             }
         } else {
             System.out.println("\t Your list is still empty! Start adding tasks now :)");
@@ -170,7 +170,7 @@ public class Duke {
     public static void markTaskAsDone(String listNumber) {
         int taskID = Integer.parseInt(listNumber) - 1;
         if (0 <= taskID && taskID < itemsInList) {
-            list[taskID].markAsDone();
+            list.get(taskID).markAsDone();
         } else {
             printErrorMessage(GENERAL_ERROR_MESSAGE);
         }
