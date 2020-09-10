@@ -1,0 +1,5 @@
+ T | true | this
+ T | false | that
+ D | false | thing | tmr
+ E | false | stuff | 6pm
+ T | false | thiss
