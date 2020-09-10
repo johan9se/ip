@@ -133,10 +133,11 @@ public class Duke {
     }
 
     public static Task addNewDeadline(String args) {
+        Task deadline = null;
         try {
             String description = splitDescriptionAndDateTime(args)[0];
             String byDateTime = splitDescriptionAndDateTime(args)[1];
-            Task deadline = new Deadline(description, byDateTime);
+            deadline = new Deadline(description, byDateTime);
             addNewListItem(deadline);
             return deadline;
         } catch (StringIndexOutOfBoundsException e) {
@@ -144,22 +145,22 @@ public class Duke {
         } catch (DukeException e) {
             printErrorMessage(MISSING_DETAILS_MESSAGE, "deadline");
         }
-        return null;
+        return deadline;
     }
 
     public static Task addNewEvent(String args) {
+        Task event = null;
         try {
             String description = splitDescriptionAndDateTime(args)[0];
             String atDateTime = splitDescriptionAndDateTime(args)[1];
-            Task event = new Event(description, atDateTime);
+            event = new Event(description, atDateTime);
             addNewListItem(event);
-            return event;
         } catch (StringIndexOutOfBoundsException e) {
             printErrorMessage(MISSING_DATETIME_MESSAGE, "event");
         } catch (DukeException e) {
             printErrorMessage(MISSING_DETAILS_MESSAGE, "event");
         }
-        return null;
+        return event;
     }
 
     public static void listItems() {

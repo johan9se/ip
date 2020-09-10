@@ -11,7 +11,7 @@ public class Event extends Task {
 
     @Override
     public String formatString() {
-        return " E " + super.formatString() + "|" + at;
+        return " E " + super.formatString() + " | " + at;
     }
 
     @Override

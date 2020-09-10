@@ -11,7 +11,7 @@ public class Deadline extends Task {
 
     @Override
     public String formatString() {
-        return " D " + super.formatString() + "|" + by;
+        return " D " + super.formatString() + " | " + by;
     }
 
     @Override
