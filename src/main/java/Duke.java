@@ -1,5 +1,6 @@
 import duke.*;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileWriter;
@@ -72,19 +73,23 @@ public class Duke {
             final String commandArgs = commandAndParams[1];
             switch (command) {
             case COMMAND_TODO_WORD:
-                addNewTodo(commandArgs);
+                Task todo = addNewTodo(commandArgs);
+                echoNewlyAddedItem(todo);
                 break;
             case COMMAND_DEADLINE_WORD:
-                addNewDeadline(commandArgs);
+                Task deadline = addNewDeadline(commandArgs);
+                echoNewlyAddedItem(deadline);
                 break;
             case COMMAND_EVENT_WORD:
-                addNewEvent(commandArgs);
+                Task event = addNewEvent(commandArgs);
+                echoNewlyAddedItem(event);
                 break;
             case COMMAND_LIST_WORD:
                 listItems();
                 break;
             case COMMAND_DONE_WORD:
                 markTaskAsDone(commandArgs);
+                printDoneMessage(commandArgs);
                 break;
             default:
                 printErrorMessage(DONT_UNDERSTAND_MESSAGE);
@@ -98,7 +103,7 @@ public class Duke {
         }
     }
 
-    public static String[] splitCommandWordAndArgs(String rawUserInput) throws DukeException {
+    public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException {
         final String[] split = rawUserInput.trim().split(" ", 2);
         if (split[0].matches("todo|deadline|event") && split.length == 1) {
             throw new DukeException(split[0]);
@@ -106,49 +111,55 @@ public class Duke {
         return split.length == 2 ? split : new String[] { split[0] , "" };
     }
 
+    public static String[] splitDescriptionAndDateTime (String args) throws DukeException {
+        String description = args.substring(0, args.indexOf("\\")).trim();
+        String dateTime = args.substring(args.indexOf("\\")+3).trim();
+        String[] details = {description, dateTime};
+        if (description.isEmpty() || dateTime.isEmpty()) {
+            throw new DukeException();
+        }
+        return details;
+    }
+
     public static void addNewListItem(Task item) {
         list[itemsInList] = item;
         itemsInList++;
     }
 
-    public static void addNewTodo(String args) {
+    public static Task addNewTodo(String args) {
         Task todo = new ToDo(args);
         addNewListItem(todo);
-        echoNewlyAddedItem(todo);
+        return todo;
     }
 
-    public static void addNewDeadline(String args) {
+    public static Task addNewDeadline(String args) {
         try {
-            String description = args.substring(0, args.indexOf("\\by"));
-            String byDateTime = args.substring(args.indexOf("\\by")+3);
-            if (description.isEmpty() || byDateTime.isEmpty()) {
-                throw new DukeException();
-            }
+            String description = splitDescriptionAndDateTime(args)[0];
+            String byDateTime = splitDescriptionAndDateTime(args)[1];
             Task deadline = new Deadline(description, byDateTime);
             addNewListItem(deadline);
-            echoNewlyAddedItem(deadline);
+            return deadline;
         } catch (StringIndexOutOfBoundsException e) {
             printErrorMessage(MISSING_DATETIME_MESSAGE, "deadline");
         } catch (DukeException e) {
             printErrorMessage(MISSING_DETAILS_MESSAGE, "deadline");
         }
+        return null;
     }
 
-    public static void addNewEvent(String args) {
+    public static Task addNewEvent(String args) {
         try {
-            String description = args.substring(0, args.indexOf("\\at"));
-            String atDateTime = args.substring(args.indexOf("\\at")+3);
-            if (description.isEmpty() || atDateTime.isEmpty()) {
-                throw new DukeException();
-            }
+            String description = splitDescriptionAndDateTime(args)[0];
+            String atDateTime = splitDescriptionAndDateTime(args)[1];
             Task event = new Event(description, atDateTime);
             addNewListItem(event);
-            echoNewlyAddedItem(event);
+            return event;
         } catch (StringIndexOutOfBoundsException e) {
             printErrorMessage(MISSING_DATETIME_MESSAGE, "event");
         } catch (DukeException e) {
             printErrorMessage(MISSING_DETAILS_MESSAGE, "event");
         }
+        return null;
     }
 
     public static void listItems() {
@@ -179,8 +190,15 @@ public class Duke {
         }
     }
 
+    public static void printDoneMessage(String listNumber) {
+        int taskID = Integer.parseInt(listNumber) - 1;
+        System.out.println("\t Nice! I've marked this task as done:");
+        System.out.println("\t   " + list[taskID].toString());
+        System.out.println("\t_________________________________");
+    }
+
     public static String formatList() {
-        StringBuilder text = new StringBuilder("Task List:" + System.lineSeparator());
+        StringBuilder text = new StringBuilder();
         for (int i=0;i<itemsInList;i++) {
             text.append(list[i].formatString()).append(System.lineSeparator());
         }
@@ -193,15 +211,53 @@ public class Duke {
         fw.close();
     }
 
+    private static void readFromFile(String filePath) throws FileNotFoundException {
+        File f = new File(filePath);
+        Scanner s = new Scanner(f);
+        int taskCount = 0;
+        while (s.hasNext()) {
+            taskCount++;
+            processListFromFile(s.nextLine(), taskCount);
+        }
+    }
+
+    private static void processListFromFile(String taskLine, int listNumber) {
+        String[] args = taskLine.split("\\|");
+        String type = args[0].trim();
+        boolean isDone = Boolean.parseBoolean(args[1].trim());
+        String description = args[2].trim();
+
+        switch (type) {
+        case "T":
+            addNewTodo(description);
+            break;
+        case "D":
+            addNewDeadline(description + "\\  " + args[3]);
+            break;
+        case "E":
+            addNewEvent(description + "\\  " + args[3]);
+            break;
+        default:
+            break;
+        }
+        if (isDone) {
+            list[listNumber-1].markAsDone();
+        }
+    }
+
     public static void main(String[] args) {
         printGreeting();
         printGuideMessage();
 
+        String file = "data/list.txt";
+        try {
+            readFromFile(file);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+
         Scanner in = new Scanner(System.in);
         String inputLine = in.nextLine();
-
-        File f = new File("data/list.txt");
-        String file = "data/list.txt";
 
         while (!inputLine.equals(COMMAND_EXIT_WORD)) {
             printLineBreak();
