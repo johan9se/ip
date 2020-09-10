@@ -64,7 +64,7 @@ public class Duke {
     }
 
     public static void printErrorMessage(String message, String... args) {
-        System.out.printf((message) + "\n", args);
+        System.out.printf((message) + "\n", (Object) args);
         printLineBreak();
     }
 
@@ -73,18 +73,16 @@ public class Duke {
             final String[] commandAndParams = splitCommandWordAndArgs(userInput);
             final String command = commandAndParams[0];
             final String commandArgs = commandAndParams[1];
+
             switch (command) {
             case COMMAND_TODO_WORD:
-                Task todo = addNewTodo(commandArgs);
-                echoNewlyAddedItem(todo);
+                addNewTodo(commandArgs, true);
                 break;
             case COMMAND_DEADLINE_WORD:
-                Task deadline = addNewDeadline(commandArgs);
-                echoNewlyAddedItem(deadline);
+                addNewDeadline(commandArgs, true);
                 break;
             case COMMAND_EVENT_WORD:
-                Task event = addNewEvent(commandArgs);
-                echoNewlyAddedItem(event);
+                addNewEvent(commandArgs, true);
                 break;
             case COMMAND_LIST_WORD:
                 listItems();
@@ -101,7 +99,7 @@ public class Duke {
                 printGuideMessage();
                 break;
             }
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             printErrorMessage(GENERAL_ERROR_MESSAGE);
         } catch (DukeException e) {
             printErrorMessage(INVALID_COMMAND_MESSAGE, e.command);
@@ -131,41 +129,44 @@ public class Duke {
         itemsInList++;
     }
 
-    public static Task addNewTodo(String args) {
+    public static void addNewTodo(String args, boolean isNew) {
         Task todo = new ToDo(args);
         addNewListItem(todo);
-        return todo;
+        if (isNew) {
+            echoNewlyAddedItem(todo);
+        }
     }
 
-    public static Task addNewDeadline(String args) {
-        Task deadline = null;
+    public static void addNewDeadline(String args, boolean isNew) {
         try {
             String description = splitDescriptionAndDateTime(args)[0];
             String byDateTime = splitDescriptionAndDateTime(args)[1];
-            deadline = new Deadline(description, byDateTime);
+            Task deadline = new Deadline(description, byDateTime);
             addNewListItem(deadline);
-            return deadline;
+            if (isNew) {
+                echoNewlyAddedItem(deadline);
+            }
         } catch (StringIndexOutOfBoundsException e) {
             printErrorMessage(MISSING_DATETIME_MESSAGE, "deadline");
         } catch (DukeException e) {
             printErrorMessage(MISSING_DETAILS_MESSAGE, "deadline");
         }
-        return deadline;
     }
 
-    public static Task addNewEvent(String args) {
-        Task event = null;
+    public static void addNewEvent(String args, boolean isNew) {
         try {
             String description = splitDescriptionAndDateTime(args)[0];
             String atDateTime = splitDescriptionAndDateTime(args)[1];
-            event = new Event(description, atDateTime);
+            Task event = new Event(description, atDateTime);
             addNewListItem(event);
+            if (isNew) {
+                echoNewlyAddedItem(event);
+            }
         } catch (StringIndexOutOfBoundsException e) {
             printErrorMessage(MISSING_DATETIME_MESSAGE, "event");
         } catch (DukeException e) {
             printErrorMessage(MISSING_DETAILS_MESSAGE, "event");
         }
-        return event;
     }
 
     public static void listItems() {
@@ -249,13 +250,13 @@ public class Duke {
 
         switch (type) {
         case "T":
-            addNewTodo(description);
+            addNewTodo(description, false);
             break;
         case "D":
-            addNewDeadline(description + "\\  " + args[3]);
+            addNewDeadline(description + "\\  " + args[3], false);
             break;
         case "E":
-            addNewEvent(description + "\\  " + args[3]);
+            addNewEvent(description + "\\  " + args[3], false);
             break;
         default:
             break;
