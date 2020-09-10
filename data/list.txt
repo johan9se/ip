@@ -1,0 +1,6 @@
+ T | false | this
+ T | true | that
+ D | true | thing | tmr
+ E | false | stuff | 5pm
+ T | false | this
+ D | false | fix this code | tonight
