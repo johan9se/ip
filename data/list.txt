@@ -1,0 +1,5 @@
+Task List:
+ T | ✓ | this
+ T | ✘ | that
+ D | ✓ | thing | then
+ E | ✓ | stuff | some other time

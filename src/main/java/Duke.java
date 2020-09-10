@@ -1,6 +1,9 @@
 import duke.*;
 
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Duke {
     private static final String COMMAND_LIST_WORD = "list";
@@ -176,6 +179,20 @@ public class Duke {
         }
     }
 
+    public static String formatList() {
+        StringBuilder text = new StringBuilder("Task List:" + System.lineSeparator());
+        for (int i=0;i<itemsInList;i++) {
+            text.append(list[i].formatString()).append(System.lineSeparator());
+        }
+        return text.toString();
+    }
+
+    private static void writeToFile(String filePath, String textToAdd) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        fw.write(textToAdd);
+        fw.close();
+    }
+
     public static void main(String[] args) {
         printGreeting();
         printGuideMessage();
@@ -183,9 +200,17 @@ public class Duke {
         Scanner in = new Scanner(System.in);
         String inputLine = in.nextLine();
 
+        File f = new File("data/list.txt");
+        String file = "data/list.txt";
+
         while (!inputLine.equals(COMMAND_EXIT_WORD)) {
             printLineBreak();
             executeCommand(inputLine);
+            try {
+                writeToFile(file, formatList());
+            } catch (IOException e) {
+                System.out.println("Something went wrong: " + e.getMessage());
+            }
             inputLine = in.nextLine();
         }
         printGoodbye();
