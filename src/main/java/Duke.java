@@ -267,15 +267,21 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        printGreeting();
-        printGuideMessage();
+        String filepath = "data/taskList.txt";
+        File file = new File(filepath);
 
-        String file = "data/list.txt";
         try {
-            readFromFile(file);
+            if (file.createNewFile()) {
+                readFromFile(filepath);
+            }
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Something went wrong: " + e.getMessage());
         }
+
+        printGreeting();
+        printGuideMessage();
 
         Scanner in = new Scanner(System.in);
         String inputLine = in.nextLine();
@@ -284,7 +290,7 @@ public class Duke {
             printLineBreak();
             executeCommand(inputLine);
             try {
-                writeToFile(file, formatList());
+                writeToFile(filepath, formatList());
             } catch (IOException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }
