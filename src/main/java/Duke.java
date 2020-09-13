@@ -194,7 +194,7 @@ public class Duke {
             System.out.println("\t Okiedokie! This task has been removed:");
             System.out.println("\t   " + list.remove(taskID).toString());
             itemsInList--;
-            System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList>1 ? "s":""));
+            System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList==1 ? "s":""));
             printLineBreak();
         } else {
             printErrorMessage(GENERAL_ERROR_MESSAGE);
@@ -267,13 +267,12 @@ public class Duke {
     }
 
     public static void main(String[] args) {
-        String filepath = "data/taskList.txt";
+        String filepath = "taskList.txt";
         File file = new File(filepath);
 
         try {
-            if (file.createNewFile()) {
-                readFromFile(filepath);
-            }
+            file.createNewFile();
+            readFromFile(filepath);
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {

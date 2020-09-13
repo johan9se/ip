@@ -1,5 +1,0 @@
- T | false | this
- T | true | that
- T | true | thing
- D | false | homework | tomorrow
- E | false | new product release | 12nn Sunday
