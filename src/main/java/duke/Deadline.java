@@ -1,6 +1,8 @@
 package duke;
 
 public class Deadline extends Task {
+    public static final String DEADLINE_MARKER = "D";
+
     protected String description;
     protected String by;
 
@@ -11,11 +13,11 @@ public class Deadline extends Task {
 
     @Override
     public String formatString() {
-        return " D " + super.formatString() + " | " + by;
+        return " " + DEADLINE_MARKER + " " + super.formatString() + " | " + by;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[" + DEADLINE_MARKER + "]" + super.toString() + " (by: " + by + ")";
     }
 }

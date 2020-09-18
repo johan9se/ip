@@ -1,6 +1,8 @@
 package duke;
 
 public class Event extends Task {
+    public static final String EVENT_MARKER = "E";
+
     protected String description;
     protected String at;
 
@@ -11,11 +13,11 @@ public class Event extends Task {
 
     @Override
     public String formatString() {
-        return " E " + super.formatString() + " | " + at;
+        return " " + EVENT_MARKER + " " + super.formatString() + " | " + at;
     }
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + at + ")";
+        return "[" + EVENT_MARKER + "]" + super.toString() + " (at: " + at + ")";
     }
 }

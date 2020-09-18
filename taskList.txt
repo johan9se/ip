@@ -1,0 +1,5 @@
+ E | false | CS2113 lecture | Friday 18 September 2020 from 4pm to 6pm
+ T | true | this
+ T | false | this
+ D | true | thing | tomorrow
+ T | true | thing

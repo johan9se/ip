@@ -1,17 +1,19 @@
 package duke;
 
 public class ToDo extends Task {
+    public static final String TODO_MARKER = "T";
+
     public ToDo(String description) {
         super(description);
     }
 
     @Override
     public String formatString() {
-        return " T " + super.formatString();
+        return " " + TODO_MARKER + " " + super.formatString();
     }
 
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        return "[" + TODO_MARKER + "]" + super.toString();
     }
 }
