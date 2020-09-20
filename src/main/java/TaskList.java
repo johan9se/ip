@@ -1,11 +1,25 @@
-import duke.*;
+import duke.Deadline;
+import duke.Event;
+import duke.ToDo;
+import duke.Task;
+import duke.DukeException;
 
 import java.util.ArrayList;
 
 public class TaskList {
 
-    protected static ArrayList<Task> taskList = new ArrayList<>();
+    protected static ArrayList<Task> taskList;
     protected static int itemsInList = 0;
+
+    private static final Ui ui = new Ui();
+
+    public TaskList() {
+        taskList =  new ArrayList<>();
+    }
+
+    public void accessTaskList(String inputCommand) {
+        Parser.parseCommand(inputCommand);
+    }
 
     public static void addNewListItem(Task item) {
         taskList.add(item);
@@ -30,9 +44,9 @@ public class TaskList {
                 echoNewlyAddedItem(deadline);
             }
         } catch (StringIndexOutOfBoundsException e) {
-            Ui.printErrorMessage(Ui.MISSING_DATETIME_MESSAGE, "deadline");
+            ui.printErrorMessage(Ui.MISSING_DATETIME_MESSAGE, "deadline");
         } catch (DukeException e) {
-            Ui.printErrorMessage(Ui.MISSING_DETAILS_MESSAGE, "deadline");
+            ui.printErrorMessage(Ui.MISSING_DETAILS_MESSAGE, "deadline");
         }
     }
 
@@ -46,17 +60,16 @@ public class TaskList {
                 echoNewlyAddedItem(event);
             }
         } catch (StringIndexOutOfBoundsException e) {
-            Ui.printErrorMessage(Ui.MISSING_DATETIME_MESSAGE, "event");
+            ui.printErrorMessage(Ui.MISSING_DATETIME_MESSAGE, "event");
         } catch (DukeException e) {
-            Ui.printErrorMessage(Ui.MISSING_DETAILS_MESSAGE, "event");
+            ui.printErrorMessage(Ui.MISSING_DETAILS_MESSAGE, "event");
         }
     }
 
     public static void echoNewlyAddedItem(Task item) {
         System.out.println("\t Got it! I've added this task:");
         System.out.println("\t   " + item.toString());
-        System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList >1 ? "s":""));
-        Ui.printLineBreak();
+        System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n" + Ui.LINE_BREAK +"\n", (itemsInList >1 ? "s":""));
     }
 
     public static void deleteItem(String listNumber) {
@@ -66,9 +79,9 @@ public class TaskList {
             System.out.println("\t   " + taskList.remove(taskID).toString());
             itemsInList--;
             System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList ==1 ? "s":""));
-            Ui.printLineBreak();
+            ui.printLineBreak();
         } else {
-            Ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
+            ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
         }
 
     }
@@ -92,7 +105,7 @@ public class TaskList {
         } else {
             System.out.println("\t Your list is empty! Start adding tasks now :)");
         }
-        Ui.printLineBreak();
+        ui.printLineBreak();
     }
 
     public static void markTaskAsDone(String listNumber) {
@@ -100,7 +113,7 @@ public class TaskList {
         if (0 <= taskID && taskID < itemsInList) {
             taskList.get(taskID).markAsDone();
         } else {
-            Ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
+            ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
         }
     }
 
@@ -108,6 +121,6 @@ public class TaskList {
         int taskID = Integer.parseInt(listNumber) - 1;
         System.out.println("\t Nice! I've marked this task as done:");
         System.out.println("\t   " + taskList.get(taskID).toString());
-        System.out.println("\t_________________________________");
+        ui.printLineBreak();
     }
 }

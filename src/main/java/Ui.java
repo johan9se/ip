@@ -15,29 +15,28 @@ public class Ui {
     static final String DONT_UNDERSTAND_MESSAGE = "\t Uhm........I'm sorry I do not understand what that means.";
     static final String MISSING_DATETIME_MESSAGE = "\t Please provide a date/time for this %s description!";
     static final String MISSING_DETAILS_MESSAGE = "\t Please provide all the details for this %s!";
+    static final String LINE_BREAK = "\t_________________________________";
 
     public Ui() {
-        printGreeting();
-        printGuideMessage();
     }
 
-    public static void printLineBreak() {
-        System.out.println("\t_________________________________");
+    public void printLineBreak() {
+        System.out.println(LINE_BREAK);
     }
 
-    public static void printGreeting() {
+    public void printGreeting() {
         System.out.println(LOGO);
         printLineBreak();
         System.out.println("\t Hi! I'm Olaf!\n\t What can I do for you?");
         printLineBreak();
     }
 
-    public static void printGoodbye() {
+    public void printGoodbye() {
         System.out.println("\t Byebye! Hope to see you again soon!");
         printLineBreak();
     }
 
-    public static void printGuideMessage() {
+    public void printGuideMessage() {
         System.out.println("\t Here are the commands you can use:");
         System.out.println("\t todo {description}........................ to add a new task");
         System.out.println("\t deadline {description} \\by {date time}.... to add a new task that needs to be done by a specific date/time");
@@ -49,13 +48,12 @@ public class Ui {
         printLineBreak();
     }
 
-    public static String getUserCommand() {
+    public String getUserCommand() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
-    public static void printErrorMessage(String message, String... args) {
-        System.out.printf(message + "\n", args);
-        printLineBreak();
+    public void printErrorMessage(String message, String... args) {
+        System.out.printf(message + "\n" + LINE_BREAK + "\n", args);
     }
 }

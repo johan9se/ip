@@ -1,26 +1,40 @@
 import java.io.IOException;
 
 public class Duke {
+    private static final String COMMAND_EXIT_WORD = "bye";
+
+    private final Ui ui;
+    private final TaskList tasks;
+    private final Storage storage;
+
     public Duke(String filePath) {
-        Storage.load(filePath);
-        Ui.printGreeting();
-        Ui.printGuideMessage();
+        assert false;
+        ui = new Ui();
+        tasks = new TaskList();
+        storage = new Storage(filePath);
+    }
+
+    public void run() {
+        ui.printGreeting();
+        ui.printGuideMessage();
+        storage.load();
 
         String inputLine;
         do {
-            inputLine = Ui.getUserCommand();
-            Ui.printLineBreak();
+            inputLine = ui.getUserCommand();
+            ui.printLineBreak();
+            tasks.accessTaskList(inputLine);
             try {
-                Storage.writeToFile(filePath, Storage.formatList());
+                storage.writeToFile(storage.filePath, storage.formatList());
             } catch (IOException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }
-        } while (!Parser.parseCommand(inputLine));
-        Ui.printGoodbye();
+        } while (!inputLine.equals(COMMAND_EXIT_WORD));
+        ui.printGoodbye();
     }
 
     public static void main(String[] args) {
-        new Duke("taskList.txt");
+        new Duke("taskList.txt").run();
     }
 
 }

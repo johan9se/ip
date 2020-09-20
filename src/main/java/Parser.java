@@ -9,6 +9,8 @@ public class Parser {
     private static final String COMMAND_DONE_WORD = "done";
     private static final String COMMAND_EXIT_WORD = "bye";
 
+    private static final Ui ui = new Ui();
+
     public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException {
         final String[] split = rawUserInput.trim().split(" ", 2);
         if (split[0].matches("todo|deadline|event") && split.length == 1) {
@@ -17,7 +19,7 @@ public class Parser {
         return split.length == 2 ? split : new String[] { split[0] , "" };
     }
 
-    public static boolean parseCommand(String userInput) {
+    public static void parseCommand(String userInput) {
         try {
             final String[] commandAndParams = splitCommandWordAndArgs(userInput);
             final String command = commandAndParams[0];
@@ -44,17 +46,18 @@ public class Parser {
                 TaskList.deleteItem(commandArgs);
                 break;
             case COMMAND_EXIT_WORD:
-                return true;
+                ui.printGoodbye();
+                System.exit(0);
+                break;
             default:
-                Ui.printErrorMessage(Ui.DONT_UNDERSTAND_MESSAGE);
-                Ui.printGuideMessage();
+                ui.printErrorMessage(Ui.DONT_UNDERSTAND_MESSAGE);
+                ui.printGuideMessage();
                 break;
             }
         } catch (NumberFormatException | NullPointerException e) {
-            Ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
+            ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
         } catch (DukeException e) {
-            Ui.printErrorMessage(Ui.INVALID_COMMAND_MESSAGE, e.command);
+            ui.printErrorMessage(Ui.INVALID_COMMAND_MESSAGE, e.command);
         }
-        return false;
     }
 }
