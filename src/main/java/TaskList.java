@@ -4,6 +4,7 @@ import duke.ToDo;
 import duke.Task;
 import duke.DukeException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -36,10 +37,13 @@ public class TaskList {
 
     public static void addNewDeadline(String args, boolean isNew) {
         try {
-            String description = splitDescriptionAndDateTime(args)[0];
-            String byDateTime = splitDescriptionAndDateTime(args)[1];
+            String description = Parser.splitDescriptionAndDateTime(args)[0];
+            String byDateTimeString = Parser.splitDescriptionAndDateTime(args)[1];
+            LocalDate byDateTime = Parser.getDateTimeDescription(byDateTimeString);
+
             Task deadline = new Deadline(description, byDateTime);
             addNewListItem(deadline);
+
             if (isNew) {
                 echoNewlyAddedItem(deadline);
             }
@@ -52,10 +56,13 @@ public class TaskList {
 
     public static void addNewEvent(String args, boolean isNew) {
         try {
-            String description = splitDescriptionAndDateTime(args)[0];
-            String atDateTime = splitDescriptionAndDateTime(args)[1];
+            String description = Parser.splitDescriptionAndDateTime(args)[0];
+            String atDateTimeString = Parser.splitDescriptionAndDateTime(args)[1];
+            LocalDate atDateTime = Parser.getDateTimeDescription(atDateTimeString);
+
             Task event = new Event(description, atDateTime);
             addNewListItem(event);
+
             if (isNew) {
                 echoNewlyAddedItem(event);
             }
@@ -84,16 +91,6 @@ public class TaskList {
             ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
         }
 
-    }
-
-    public static String[] splitDescriptionAndDateTime (String args) throws DukeException {
-        String description = args.substring(0, args.indexOf("\\")).trim();
-        String dateTime = args.substring(args.indexOf("\\")+3).trim();
-        String[] details = {description, dateTime};
-        if (description.isEmpty() || dateTime.isEmpty()) {
-            throw new DukeException();
-        }
-        return details;
     }
 
     public static void listItems() {

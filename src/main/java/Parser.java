@@ -1,5 +1,7 @@
 import duke.DukeException;
 
+import java.time.LocalDate;
+
 public class Parser {
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_TODO_WORD = "todo";
@@ -10,14 +12,6 @@ public class Parser {
     private static final String COMMAND_EXIT_WORD = "bye";
 
     private static final Ui ui = new Ui();
-
-    public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException {
-        final String[] split = rawUserInput.trim().split(" ", 2);
-        if (split[0].matches("todo|deadline|event") && split.length == 1) {
-            throw new DukeException(split[0]);
-        }
-        return split.length == 2 ? split : new String[] { split[0] , "" };
-    }
 
     public static void parseCommand(String userInput) {
         try {
@@ -59,5 +53,27 @@ public class Parser {
         } catch (DukeException e) {
             ui.printErrorMessage(Ui.INVALID_COMMAND_MESSAGE, e.command);
         }
+    }
+
+    public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException {
+        final String[] split = rawUserInput.trim().split(" ", 2);
+        if (split[0].matches("todo|deadline|event") && split.length == 1) {
+            throw new DukeException(split[0]);
+        }
+        return split.length == 2 ? split : new String[] { split[0] , "" };
+    }
+
+    public static String[] splitDescriptionAndDateTime (String args) throws DukeException {
+        String description = args.substring(0, args.indexOf("\\")).trim();
+        String dateTimeString = args.substring(args.indexOf("\\")+3).trim();
+        String[] details = {description, dateTimeString};
+        if (description.isEmpty() || dateTimeString.isEmpty()) {
+            throw new DukeException();
+        }
+        return details;
+    }
+
+    public static LocalDate getDateTimeDescription(String inputDate) {
+        return LocalDate.parse(inputDate);
     }
 }

@@ -1,12 +1,14 @@
 package duke;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Deadline extends Task {
     public static final String DEADLINE_MARKER = "D";
 
-    protected String description;
-    protected String by;
+    protected LocalDate by;
 
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDate by) {
         super(description);
         this.by = by;
     }
@@ -18,6 +20,10 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[" + DEADLINE_MARKER + "]" + super.toString() + " (by: " + by + ")";
+        return "[" + DEADLINE_MARKER + "]" + super.toString() + " (by: " + formatDate(by) + ")";
+    }
+
+    public String formatDate(LocalDate dateTime) {
+        return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 }

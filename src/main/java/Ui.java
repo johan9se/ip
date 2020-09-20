@@ -39,8 +39,8 @@ public class Ui {
     public void printGuideMessage() {
         System.out.println("\t Here are the commands you can use:");
         System.out.println("\t todo {description}........................ to add a new task");
-        System.out.println("\t deadline {description} \\by {date time}.... to add a new task that needs to be done by a specific date/time");
-        System.out.println("\t event {description} \\at {date time}....... to add a new task that starts and ends at a specific date/time");
+        System.out.println("\t deadline {description} \\by {yyyy-mm-dd}.... to add a new task that needs to be done by a specific date/time");
+        System.out.println("\t event {description} \\at {yyyy-mm-dd}....... to add a new task that starts and ends at a specific date/time");
         System.out.println("\t list...................................... to see your entire to-do list");
         System.out.println("\t delete [item num]........................... to remove item off the list");
         System.out.println("\t done [item num]........................... to check off something you have completed");
