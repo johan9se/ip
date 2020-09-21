@@ -1,5 +1,8 @@
 import java.util.Scanner;
 
+/**
+ * Text UI of the Duke application.
+ */
 public class Ui {
     private static final String LOGO = "\t   .            *        .\n" +
                                         "\t *    .     * .     *\n" +
@@ -31,9 +34,13 @@ public class Ui {
         printLineBreak();
     }
 
-    public void printGoodbye() {
+    /**
+     * Displays the goodbye message and exits the runtime.
+     */
+    public void printGoodbyeAndExit() {
         System.out.println("\t Byebye! Hope to see you again soon!");
         printLineBreak();
+        System.exit(0);
     }
 
     public void printGuideMessage() {
@@ -48,11 +55,19 @@ public class Ui {
         printLineBreak();
     }
 
+    /**
+     * Prompts for the command from the user.
+     *
+     * @return full line entered by the user
+     */
     public String getUserCommand() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 
+    /**
+     * Displays the corresponding error message.
+     */
     public void printErrorMessage(String message, String... args) {
         System.out.printf(message + "\n" + LINE_BREAK + "\n", args);
     }

@@ -1,5 +1,9 @@
 import java.io.IOException;
 
+/**
+ * Entry point of the Duke application.
+ * Initializes the application and starts the interaction with the user.
+ */
 public class Duke {
     private static final String COMMAND_EXIT_WORD = "bye";
 
@@ -30,7 +34,7 @@ public class Duke {
                 System.out.println("Something went wrong: " + e.getMessage());
             }
         } while (!inputLine.equals(COMMAND_EXIT_WORD));
-        ui.printGoodbye();
+        ui.printGoodbyeAndExit();
     }
 
     public static void main(String[] args) {

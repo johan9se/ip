@@ -1,5 +1,8 @@
 import duke.DukeException;
 
+/**
+ * Parses user input.
+ */
 public class Parser {
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_TODO_WORD = "todo";
@@ -11,6 +14,12 @@ public class Parser {
 
     private static final Ui ui = new Ui();
 
+    /**
+     * Separate the command word from the full input line.
+     *
+     * @param rawUserInput full line entered by the user.
+     * @return array containing the command word, and the rest of the input line.
+     */
     public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException {
         final String[] split = rawUserInput.trim().split(" ", 2);
         if (split[0].matches("todo|deadline|event") && split.length == 1) {
@@ -19,6 +28,11 @@ public class Parser {
         return split.length == 2 ? split : new String[] { split[0] , "" };
     }
 
+    /**
+     * Parses user input into command and executes it accordingly.
+     *
+     * @param userInput full user input string
+     */
     public static void parseCommand(String userInput) {
         try {
             final String[] commandAndParams = splitCommandWordAndArgs(userInput);
@@ -46,8 +60,7 @@ public class Parser {
                 TaskList.deleteItem(commandArgs);
                 break;
             case COMMAND_EXIT_WORD:
-                ui.printGoodbye();
-                System.exit(0);
+                ui.printGoodbyeAndExit();
                 break;
             default:
                 ui.printErrorMessage(Ui.DONT_UNDERSTAND_MESSAGE);

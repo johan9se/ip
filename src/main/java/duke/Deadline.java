@@ -1,5 +1,9 @@
 package duke;
 
+/**
+ * Represents a Deadline-type Task in the TaskList.
+ * Consists of a description and a particular scheduled deadline.
+ */
 public class Deadline extends Task {
     public static final String DEADLINE_MARKER = "D";
 
