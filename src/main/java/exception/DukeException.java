@@ -1,4 +1,4 @@
-package duke;
+package exception;
 
 /**
  * Signals an error caused by invalid commands when adding new Tasks into the TaskList.

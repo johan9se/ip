@@ -1,4 +1,4 @@
-package duke;
+package exception;
 
 public class InvalidTimeFrameException extends Exception{
     public String timeframe;

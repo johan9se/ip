@@ -1,4 +1,4 @@
-package duke;
+package task;
 
 /**
  * Represents a Todo-type Task in the TaskList
