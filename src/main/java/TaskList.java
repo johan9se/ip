@@ -5,6 +5,7 @@ import duke.Task;
 import duke.DukeException;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class TaskList {
 
@@ -104,6 +105,17 @@ public class TaskList {
             }
         } else {
             System.out.println("\t Your list is empty! Start adding tasks now :)");
+        }
+        ui.printLineBreak();
+    }
+
+    public static void findAndListTasks(String keyword) {
+        AtomicInteger i = new AtomicInteger(1);
+        taskList.stream().filter((t) -> t.contains(keyword))
+                .forEach((t) -> System.out.println(i.getAndIncrement() + ". " + t.toString()));
+
+        if (i.get() == 1) {
+            System.out.println("No tasks containing '" + keyword + "' are found!");
         }
         ui.printLineBreak();
     }
