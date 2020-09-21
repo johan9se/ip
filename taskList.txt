@@ -1,5 +1,10 @@
- E | false | CS2113 lecture | Friday 18 September 2020 from 4pm to 6pm
- T | true | this
  T | false | this
- D | true | thing | tomorrow
- T | true | thing
+ T | true | this
+ D | false | stuff | 2019-10-03T06:30
+ E | true | pancake dinner | 2020-09-24T05:30
+ D | true | homework | 2020-09-28T00:00
+ D | false | homework 2 | 2020-09-28T10:03
+ D | true | a | 2020-09-21T06:30
+ D | true | a | 2020-09-21T06:31
+ D | false | a | 2020-09-21T06:40
+ D | false | a | 2020-09-22T04:30
