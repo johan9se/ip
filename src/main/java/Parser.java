@@ -1,6 +1,8 @@
 import duke.DukeException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 
 public class Parser {
     private static final String COMMAND_LIST_WORD = "list";
@@ -52,6 +54,8 @@ public class Parser {
             ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
         } catch (DukeException e) {
             ui.printErrorMessage(Ui.INVALID_COMMAND_MESSAGE, e.command);
+        } catch (DateTimeParseException e) {
+            ui.printErrorMessage(Ui.INVALID_DATETIME_FORMAT);
         }
     }
 
@@ -65,7 +69,7 @@ public class Parser {
 
     public static String[] splitDescriptionAndDateTime (String args) throws DukeException {
         String description = args.substring(0, args.indexOf("\\")).trim();
-        String dateTimeString = args.substring(args.indexOf("\\")+3).trim();
+        String dateTimeString = formatDateAndTimeInput(args.substring(args.indexOf("\\")+3).trim());
         String[] details = {description, dateTimeString};
         if (description.isEmpty() || dateTimeString.isEmpty()) {
             throw new DukeException();
@@ -73,7 +77,17 @@ public class Parser {
         return details;
     }
 
-    public static LocalDate getDateTimeDescription(String inputDate) {
-        return LocalDate.parse(inputDate);
+    public static String formatDateAndTimeInput(String dateTimeString) {
+        String[] args = dateTimeString.split(",", 2);
+        if (args.length > 1) {
+            String date = args[0].trim();
+            String time = args[1].trim();
+            return date + "T" + time;
+        }
+        return dateTimeString;
+    }
+
+    public static LocalDateTime getDateTimeDescription(String inputDateTime) {
+        return LocalDateTime.parse(inputDateTime);
     }
 }

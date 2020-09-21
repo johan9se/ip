@@ -1,14 +1,14 @@
 package duke;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Event extends Task {
     public static final String EVENT_MARKER = "E";
 
-    protected LocalDate at;
+    protected LocalDateTime at;
 
-    public Event(String description, LocalDate at) {
+    public Event(String description, LocalDateTime at) {
         super(description);
         this.at = at;
     }
@@ -23,7 +23,7 @@ public class Event extends Task {
         return "[" + EVENT_MARKER + "]" + super.toString() + " (at: " + formatDate(at) + ")";
     }
 
-    public String formatDate(LocalDate dateTime) {
-        return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+    public String formatDate(LocalDateTime dateTime) {
+        return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm"));
     }
 }

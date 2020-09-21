@@ -5,6 +5,7 @@ import duke.Task;
 import duke.DukeException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TaskList {
@@ -27,6 +28,18 @@ public class TaskList {
         itemsInList++;
     }
 
+    public static Object[] prepareDatedTask(String args) throws DukeException {
+        String description = Parser.splitDescriptionAndDateTime(args)[0];
+        String DateTimeString = Parser.formatDateAndTimeInput(Parser.splitDescriptionAndDateTime(args)[1]);
+        if (DateTimeString.contains("T")) {
+            LocalDateTime DateTime = LocalDateTime.parse(DateTimeString);
+            return new Object[] {description, DateTime};
+        }
+            LocalDate Date = LocalDate.parse(DateTimeString);
+            return new Object[] {description, Date};
+
+    }
+
     public static void addNewTodo(String args, boolean isNew) {
         Task todo = new ToDo(args);
         addNewListItem(todo);
@@ -38,8 +51,8 @@ public class TaskList {
     public static void addNewDeadline(String args, boolean isNew) {
         try {
             String description = Parser.splitDescriptionAndDateTime(args)[0];
-            String byDateTimeString = Parser.splitDescriptionAndDateTime(args)[1];
-            LocalDate byDateTime = Parser.getDateTimeDescription(byDateTimeString);
+            String byDateTimeString = Parser.formatDateAndTimeInput(Parser.splitDescriptionAndDateTime(args)[1]);
+            LocalDateTime byDateTime = Parser.getDateTimeDescription(byDateTimeString);
 
             Task deadline = new Deadline(description, byDateTime);
             addNewListItem(deadline);
@@ -57,8 +70,8 @@ public class TaskList {
     public static void addNewEvent(String args, boolean isNew) {
         try {
             String description = Parser.splitDescriptionAndDateTime(args)[0];
-            String atDateTimeString = Parser.splitDescriptionAndDateTime(args)[1];
-            LocalDate atDateTime = Parser.getDateTimeDescription(atDateTimeString);
+            String atDateTimeString = Parser.formatDateAndTimeInput(Parser.splitDescriptionAndDateTime(args)[1]);
+            LocalDateTime atDateTime = Parser.getDateTimeDescription(atDateTimeString);
 
             Task event = new Event(description, atDateTime);
             addNewListItem(event);
