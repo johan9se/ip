@@ -6,14 +6,15 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 public class Parser {
-    private static final String COMMAND_LIST_WORD = "list";
-    private static final String COMMAND_TODO_WORD = "todo";
+    private static final String COMMAND_EXIT_WORD = "bye";
     private static final String COMMAND_DEADLINE_WORD = "deadline";
-    private static final String COMMAND_EVENT_WORD = "event";
-    private static final String COMMAND_UPCOMING_WORD = "upcoming";
     private static final String COMMAND_DELETE_WORD = "delete";
     private static final String COMMAND_DONE_WORD = "done";
-    private static final String COMMAND_EXIT_WORD = "bye";
+    private static final String COMMAND_EVENT_WORD = "event";
+    private static final String COMMAND_FIND_WORD = "find";
+    private static final String COMMAND_LIST_WORD = "list";
+    private static final String COMMAND_TODO_WORD = "todo";
+    private static final String COMMAND_UPCOMING_WORD = "upcoming";
 
     private static final String DAY_TIMEFRAME = "day";
     private static final String WEEK_TIMEFRAME = "week";
@@ -42,6 +43,9 @@ public class Parser {
                 break;
             case COMMAND_UPCOMING_WORD:
                 TaskList.listUpcomingTasks(commandArgs);
+                break;
+            case COMMAND_FIND_WORD:
+                TaskList.findAndListTasks(commandArgs);
                 break;
             case COMMAND_DONE_WORD:
                 TaskList.markTaskAsDone(commandArgs);
