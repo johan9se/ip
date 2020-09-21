@@ -1,6 +1,10 @@
  T | false | this
  T | true | this
  D | false | stuff | 2019-10-03T06:30
- E | false | pancake dinner | 2020-09-24T05:30
- D | false | homework | 2020-09-28T00:00
+ E | true | pancake dinner | 2020-09-24T05:30
+ D | true | homework | 2020-09-28T00:00
  D | false | homework 2 | 2020-09-28T10:03
+ D | true | a | 2020-09-21T06:30
+ D | true | a | 2020-09-21T06:31
+ D | false | a | 2020-09-21T06:40
+ D | false | a | 2020-09-22T04:30

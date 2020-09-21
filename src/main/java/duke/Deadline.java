@@ -14,6 +14,11 @@ public class Deadline extends Task {
     }
 
     @Override
+    public LocalDateTime getDateTime() {
+        return by;
+    }
+
+    @Override
     public String formatString() {
         return " " + DEADLINE_MARKER + " " + super.formatString() + " | " + by;
     }

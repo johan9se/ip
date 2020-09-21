@@ -14,6 +14,11 @@ public class Event extends Task {
     }
 
     @Override
+    public LocalDateTime getDateTime() {
+        return at;
+    }
+
+    @Override
     public String formatString() {
         return " " + EVENT_MARKER + " " + super.formatString() + " | " + at;
     }
