@@ -1,9 +1,7 @@
-import duke.Deadline;
-import duke.Event;
-import duke.ToDo;
-import duke.Task;
-import duke.DukeException;
+import duke.*;
+import org.omg.CORBA.DynAnyPackage.Invalid;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +15,7 @@ public class TaskList {
     private static final Ui ui = new Ui();
 
     public TaskList() {
-        taskList =  new ArrayList<>();
+        taskList = new ArrayList<>();
     }
 
     /**
@@ -62,10 +60,13 @@ public class TaskList {
      */
     public static void addNewDeadline(String args, boolean isNew) {
         try {
-            String description = splitDescriptionAndDateTime(args)[0];
-            String byDateTime = splitDescriptionAndDateTime(args)[1];
+            String description = Parser.splitDescriptionAndDateTime(args)[0];
+            String byDateTimeString = Parser.formatDateAndTimeInput(Parser.splitDescriptionAndDateTime(args)[1]);
+            LocalDateTime byDateTime = Parser.getDateTimeDescription(byDateTimeString);
+
             Task deadline = new Deadline(description, byDateTime);
             addNewListItem(deadline);
+
             if (isNew) {
                 echoNewlyAddedItem(deadline);
             }
@@ -84,10 +85,13 @@ public class TaskList {
      */
     public static void addNewEvent(String args, boolean isNew) {
         try {
-            String description = splitDescriptionAndDateTime(args)[0];
-            String atDateTime = splitDescriptionAndDateTime(args)[1];
+            String description = Parser.splitDescriptionAndDateTime(args)[0];
+            String atDateTimeString = Parser.formatDateAndTimeInput(Parser.splitDescriptionAndDateTime(args)[1]);
+            LocalDateTime atDateTime = Parser.getDateTimeDescription(atDateTimeString);
+
             Task event = new Event(description, atDateTime);
             addNewListItem(event);
+
             if (isNew) {
                 echoNewlyAddedItem(event);
             }
@@ -106,7 +110,7 @@ public class TaskList {
     public static void echoNewlyAddedItem(Task item) {
         System.out.println("\t Got it! I've added this task:");
         System.out.println("\t   " + item.toString());
-        System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n" + Ui.LINE_BREAK +"\n", (itemsInList >1 ? "s":""));
+        System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n" + Ui.LINE_BREAK + "\n", (itemsInList > 1 ? "s" : ""));
     }
 
     /**
@@ -120,12 +124,11 @@ public class TaskList {
             System.out.println("\t Okiedokie! This task has been removed:");
             System.out.println("\t   " + taskList.remove(taskID).toString());
             itemsInList--;
-            System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList ==1 ? "s":""));
+            System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList == 1 ? "s" : ""));
             ui.printLineBreak();
         } else {
             ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
         }
-
     }
 
     /**
@@ -147,16 +150,52 @@ public class TaskList {
     /**
      * List out and number all Tasks in the Tasklist.
      */
-    public static void listItems() {
+    public static void listAllItems() {
         if (itemsInList > 0) {
             System.out.println("\t Here are the tasks in your list:");
-            for (int i = 0; i< itemsInList; i++) {
-                System.out.printf("\t %d. %s\n", i+1, taskList.get(i).toString());
+            for (int i = 0; i < itemsInList; i++) {
+                System.out.printf("\t %d. %s\n", i + 1, taskList.get(i).toString());
             }
         } else {
             System.out.println("\t Your list is empty! Start adding tasks now :)");
         }
         ui.printLineBreak();
+    }
+
+    public static void listUpcomingTasks(String timeFrame) {
+        try {
+            LocalDateTime[] dateRange = Parser.getStartAndEndDate(timeFrame);
+            ArrayList<Task> upcomingTasks = getUpcomingTasks(dateRange[0], dateRange[1]);
+
+            if (!upcomingTasks.isEmpty()) {
+                System.out.println("\t Here are the upcoming tasks for the " + timeFrame);
+                int i = 1;
+                for (Task t : upcomingTasks) {
+                    System.out.println("\t" + (i++) + ". " + t.toString());
+                }
+            } else {
+                System.out.println("\t There's nothing coming up for the " + timeFrame + "! Chill ooooout :)");
+            }
+
+            ui.printLineBreak();
+        } catch (InvalidTimeFrameException e) {
+            ui.printErrorMessage(Ui.INVALID_TIMEFRAME_MESSAGE, e.timeframe);
+        }
+    }
+
+    public static ArrayList<Task> getUpcomingTasks(LocalDateTime startDate, LocalDateTime endDate) {
+        ArrayList<Task> upcomingTasks = new ArrayList<>();
+        for (int i = 0; i < itemsInList; i++) {
+            Task t = taskList.get(i);
+            if ((t instanceof Deadline || t instanceof Event) && isWithinTimeFrame(startDate, endDate, t)) {
+                upcomingTasks.add(t);
+            }
+        }
+        return upcomingTasks;
+    }
+
+    public static boolean isWithinTimeFrame(LocalDateTime startDate, LocalDateTime endDate, Task t) {
+        return t.getDateTime().isAfter(startDate) && t.getDateTime().isBefore(endDate);
     }
 
     /**
