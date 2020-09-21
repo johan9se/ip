@@ -8,6 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Handles the loading and saving of Tasks into a file.
+ */
 public class Storage {
     protected static File file;
     protected String filePath;

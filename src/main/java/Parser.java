@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
+/**
+ * Parses user input.
+ */
 public class Parser {
     private static final String COMMAND_EXIT_WORD = "bye";
     private static final String COMMAND_DEADLINE_WORD = "deadline";
@@ -22,6 +25,11 @@ public class Parser {
 
     private static final Ui ui = new Ui();
 
+    /**
+     * Parses user input into command and executes it accordingly.
+     *
+     * @param userInput full user input string
+     */
     public static void parseCommand(String userInput) {
         try {
             final String[] commandAndParams = splitCommandWordAndArgs(userInput);
@@ -55,8 +63,7 @@ public class Parser {
                 TaskList.deleteItem(commandArgs);
                 break;
             case COMMAND_EXIT_WORD:
-                ui.printGoodbye();
-                System.exit(0);
+                ui.printGoodbyeAndExit();
                 break;
             default:
                 ui.printErrorMessage(Ui.DONT_UNDERSTAND_MESSAGE);
@@ -72,6 +79,12 @@ public class Parser {
         }
     }
 
+    /**
+     * Separate the command word from the full input line.
+     *
+     * @param rawUserInput full line entered by the user.
+     * @return array containing the command word, and the rest of the input line.
+     */
     public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException, InvalidTimeFrameException {
         final String[] split = rawUserInput.trim().split(" ", 2);
         if (split.length == 1) {

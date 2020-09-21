@@ -2,6 +2,9 @@ package duke;
 
 import java.time.LocalDateTime;
 
+/**
+ * Represents a Task in the TaskList
+ */
 public class Task {
     protected String description;
     protected boolean isDone;

@@ -1,5 +1,8 @@
 package duke;
 
+/**
+ * Represents a Todo-type Task in the TaskList
+ */
 public class ToDo extends Task {
     public static final String TODO_MARKER = "T";
 

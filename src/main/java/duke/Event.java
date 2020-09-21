@@ -3,6 +3,10 @@ package duke;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Represents an Event-type Task in the TaskList.
+ * Consists of a description and a particular scheduled date/time.
+ */
 public class Event extends Task {
     public static final String EVENT_MARKER = "E";
 
