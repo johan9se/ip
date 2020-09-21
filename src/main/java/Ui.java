@@ -15,10 +15,10 @@ public class Ui {
 
     static final String GENERAL_ERROR_MESSAGE = "\t Oops! Something went wrong. Please try again.";
     static final String INVALID_COMMAND_MESSAGE = "\t Ohno! The description of a '%s' cannot be empty :(";
-    static final String DONT_UNDERSTAND_MESSAGE = "\t Uhm........I'm sorry I do not understand what that means.";
+    static final String DONT_UNDERSTAND_MESSAGE = "\t Uhm........I'm sorry I do not understand what that means.\n\t Type 'help' to see all commands!";
     static final String MISSING_DATETIME_MESSAGE = "\t Please provide a date/time for this %s description!";
     static final String MISSING_DETAILS_MESSAGE = "\t Please provide all the details for this %s!";
-    static final String INVALID_DATETIME_FORMAT = "\t The date+time format should be {yyyy-mm-dd, HH:mm}";
+    static final String INVALID_DATETIME_FORMAT = "\t The date+time format should be {yyyy-mm-dd, HH:mm}.";
     static final String INVALID_TIMEFRAME_MESSAGE = "\t Uh oh! %s is not a valid time frame. Try {day/week/month} instead.";
     static final String LINE_BREAK = "\t_________________________________";
 
@@ -54,6 +54,7 @@ public class Ui {
         System.out.println("\t upcoming <day/week/month>........................ to see what is coming up soon");
         System.out.println("\t delete [item num]................................ to remove item off the list");
         System.out.println("\t done [item num].................................. to check off something you have completed");
+        System.out.println("\t find [keyword]................................... to see which tasks contain a particular keyword");
         System.out.println("\t bye.............................................. see you later alligator!");
         printLineBreak();
     }

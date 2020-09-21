@@ -15,6 +15,7 @@ public class Parser {
     private static final String COMMAND_DONE_WORD = "done";
     private static final String COMMAND_EVENT_WORD = "event";
     private static final String COMMAND_FIND_WORD = "find";
+    private static final String COMMAND_HELP_WORD = "help";
     private static final String COMMAND_LIST_WORD = "list";
     private static final String COMMAND_TODO_WORD = "todo";
     private static final String COMMAND_UPCOMING_WORD = "upcoming";
@@ -62,15 +63,17 @@ public class Parser {
             case COMMAND_DELETE_WORD:
                 TaskList.deleteItem(commandArgs);
                 break;
+            case COMMAND_HELP_WORD:
+                ui.printGuideMessage();
+                break;
             case COMMAND_EXIT_WORD:
                 ui.printGoodbyeAndExit();
                 break;
             default:
                 ui.printErrorMessage(Ui.DONT_UNDERSTAND_MESSAGE);
-                ui.printGuideMessage();
                 break;
             }
-        } catch (NumberFormatException | NullPointerException | InvalidTimeFrameException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
         } catch (DukeException e) {
             ui.printErrorMessage(Ui.INVALID_COMMAND_MESSAGE, e.command);
@@ -85,18 +88,20 @@ public class Parser {
      * @param rawUserInput full line entered by the user.
      * @return array containing the command word, and the rest of the input line.
      */
-    public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException, InvalidTimeFrameException {
+    public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException {
         final String[] split = rawUserInput.trim().split(" ", 2);
-        if (split.length == 1) {
-            if (split[0].matches("todo|deadline|event")) {
-                throw new DukeException(split[0]);
-            } else if (split[0].matches("upcoming")) {
-                throw new InvalidTimeFrameException();
-            }
+        if (split.length == 1 && (split[0].matches("todo|deadline|event"))) {
+            throw new DukeException(split[0]);
         }
         return split.length == 2 ? split : new String[] { split[0] , "" };
     }
 
+    /**
+     * Separate the description and corresponding date/time attributed to a Task,
+     * returned as an array.
+     *
+     * @param args the full user input, excluding the command
+     */
     public static String[] splitDescriptionAndDateTime (String args) throws DukeException {
         String description = args.substring(0, args.indexOf("\\")).trim();
         String dateTimeString = formatDateAndTimeInput(args.substring(args.indexOf("\\")+3).trim());
@@ -107,6 +112,10 @@ public class Parser {
         return details;
     }
 
+    /**
+     * Convert input date/time string into a format that can
+     * be parsed into a LocalDateTime object.
+     */
     public static String formatDateAndTimeInput(String dateTimeString) {
         String[] args = dateTimeString.split(",", 2);
         if (args.length > 1) {
@@ -121,6 +130,11 @@ public class Parser {
         return LocalDateTime.parse(inputDateTime);
     }
 
+    /**
+     * Get the relevant LocalDateTime values for a particular input time frame.
+     *
+     * @param timeFrame String input indicating date/time range
+     */
     public static LocalDateTime[] getStartAndEndDate(String timeFrame) throws InvalidTimeFrameException {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = null;
@@ -137,6 +151,6 @@ public class Parser {
         default:
             throw new InvalidTimeFrameException(timeFrame);
         }
-        return new LocalDateTime[]{startDate, endDate};
+        return new LocalDateTime[] {startDate, endDate};
     }
 }

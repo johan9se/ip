@@ -20,6 +20,9 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads existing tasks from a file into the TaskList.
+     */
     public void load() {
         try {
             file.createNewFile();
@@ -30,7 +33,10 @@ public class Storage {
             System.out.println("Something went wrong: " + e.getMessage());
         }
     }
-    
+
+    /**
+     * Reads contents of a file.
+     */
     public void readFromFile(String filePath) throws FileNotFoundException {
         File f = new File(filePath);
         Scanner s = new Scanner(f);
@@ -41,6 +47,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Processes existing tasks from a file and adds it into the TaskList.
+     */
     public void processListFromFile(String taskLine, int listNumber) {
         String[] args = taskLine.split("\\|");
         String type = args[0].trim();
@@ -65,6 +74,9 @@ public class Storage {
         }
     }
 
+    /**
+     * Handle string formatting of contents before it is written into a file.
+     */
     public String formatList() {
         StringBuilder text = new StringBuilder();
         for (int i = 0; i< TaskList.itemsInList; i++) {

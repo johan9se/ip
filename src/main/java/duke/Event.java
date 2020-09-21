@@ -35,4 +35,9 @@ public class Event extends Task {
     public String formatDate(LocalDateTime dateTime) {
         return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm"));
     }
+
+    @Override
+    public boolean contains(String keyword) {
+        return super.contains(keyword) || at.toString().contains(keyword);
+    }
 }

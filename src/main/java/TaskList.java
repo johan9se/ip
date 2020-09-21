@@ -1,5 +1,9 @@
-import duke.*;
-import org.omg.CORBA.DynAnyPackage.Invalid;
+import duke.Deadline;
+import duke.Event;
+import duke.ToDo;
+import duke.Task;
+import duke.DukeException;
+import duke.InvalidTimeFrameException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +31,13 @@ public class TaskList {
     public void accessTaskList(String inputCommand) {
         Parser.parseCommand(inputCommand);
     }
+
+
+    /*
+     * ===========================================
+     *           ADDING TO TASKLIST
+     * ===========================================
+     */
 
     /**
      * Add newly input Task into the TaskList and
@@ -114,6 +125,12 @@ public class TaskList {
         System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n" + Ui.LINE_BREAK + "\n", (itemsInList > 1 ? "s" : ""));
     }
 
+    /*
+     * ===========================================
+     *          DELETING FROM TASKLIST
+     * ===========================================
+     */
+
     /**
      * Delete Task from TaskList.
      *
@@ -132,21 +149,12 @@ public class TaskList {
         }
     }
 
-    /**
-     * Separate the description and corresponding date/time attributed to a Task,
-     * returned as an array.
-     *
-     * @param args the full user input, excluding the command
+
+    /*
+     * ===========================================
+     *        LISTING CONTENTS OF TASKLIST
+     * ===========================================
      */
-    public static String[] splitDescriptionAndDateTime (String args) throws DukeException {
-        String description = args.substring(0, args.indexOf("\\")).trim();
-        String dateTime = args.substring(args.indexOf("\\")+3).trim();
-        String[] details = {description, dateTime};
-        if (description.isEmpty() || dateTime.isEmpty()) {
-            throw new DukeException();
-        }
-        return details;
-    }
 
     /**
      * List out and number all Tasks in the Tasklist.
@@ -164,14 +172,18 @@ public class TaskList {
     }
 
     public static void findAndListTasks(String keyword) {
-        AtomicInteger i = new AtomicInteger(1);
-        taskList.stream().filter((t) -> t.contains(keyword))
-                .forEach((t) -> System.out.println(i.getAndIncrement() + ". " + t.toString()));
+        if (!keyword.isEmpty()) {
+            AtomicInteger i = new AtomicInteger(1);
+            taskList.stream().filter((t) -> t.contains(keyword))
+                    .forEach((t) -> System.out.println(i.getAndIncrement() + ". " + t.toString()));
 
-        if (i.get() == 1) {
-            System.out.println("No tasks containing '" + keyword + "' are found!");
+            if (i.get() == 1) {
+                System.out.println("No tasks containing '" + keyword + "' are found!");
+            }
+            ui.printLineBreak();
+        } else {
+            ui.printErrorMessage(Ui.MISSING_DETAILS_MESSAGE, "search query");
         }
-        ui.printLineBreak();
     }
 
     public static void listUpcomingTasks(String timeFrame) {
@@ -188,9 +200,11 @@ public class TaskList {
             } else {
                 System.out.println("\t There's nothing coming up for the " + timeFrame + "! Chill ooooout :)");
             }
-
             ui.printLineBreak();
         } catch (InvalidTimeFrameException e) {
+            if (e.timeframe.isEmpty()) {
+                e.timeframe = "An empty time frame";
+            }
             ui.printErrorMessage(Ui.INVALID_TIMEFRAME_MESSAGE, e.timeframe);
         }
     }
@@ -209,6 +223,13 @@ public class TaskList {
     public static boolean isWithinTimeFrame(LocalDateTime startDate, LocalDateTime endDate, Task t) {
         return t.getDateTime().isAfter(startDate) && t.getDateTime().isBefore(endDate);
     }
+
+
+    /*
+     * ===========================================
+     *         MARKING COMPLETED TASKS
+     * ===========================================
+     */
 
     /**
      * Mark a particular Task item as done.
