@@ -1,4 +1,4 @@
-package exception;
+package duke.data.exception;
 
 public class InvalidTimeFrameException extends Exception{
     public String timeframe;

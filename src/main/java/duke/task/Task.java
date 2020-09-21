@@ -1,9 +1,9 @@
-package task;
+package duke.task;
 
 import java.time.LocalDateTime;
 
 /**
- * Represents a Task in the TaskList
+ * Represents a Task in the duke.data.TaskList
  */
 public class Task {
     protected String description;

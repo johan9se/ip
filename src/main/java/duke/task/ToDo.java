@@ -1,7 +1,7 @@
-package task;
+package duke.task;
 
 /**
- * Represents a Todo-type Task in the TaskList
+ * Represents a Todo-type Task in the duke.data.TaskList
  */
 public class ToDo extends Task {
     public static final String TODO_MARKER = "T";

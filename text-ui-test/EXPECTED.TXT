@@ -11,9 +11,9 @@
 	 What can I do for you?
 	_________________________________
 	 Here are the commands you can use:
-	 todo {description}........................ to add a new task
-	 deadline {description} \by {date time}.... to add a new task that needs to be done by a specific date/time
-	 event {description} \at {date time}....... to add a new task that starts and ends at a specific date/time
+	 todo {description}........................ to add a new duke.task
+	 deadline {description} \by {date time}.... to add a new duke.task that needs to be done by a specific date/time
+	 event {description} \at {date time}....... to add a new duke.task that starts and ends at a specific date/time
 	 list...................................... to see your entire to-do list
 	 delete [item num]........................... to remove item off the list
 	 done [item num]........................... to check off something you have completed
@@ -23,17 +23,17 @@
 	 Your list is empty! Start adding tasks now :)
 	_________________________________
 	_________________________________
-	 Got it! I've added this task:
+	 Got it! I've added this duke.task:
 	   [T][✘] CG2027 homework
-	 Now you have 1 task in the list.
+	 Now you have 1 duke.task in the list.
 	_________________________________
 	_________________________________
-	 Got it! I've added this task:
+	 Got it! I've added this duke.task:
 	   [T][✘] ST2334 tutorial
 	 Now you have 2 tasks in the list.
 	_________________________________
 	_________________________________
-	 Nice! I've marked this task as done:
+	 Nice! I've marked this duke.task as done:
 	   [✓] CG2027 homework
 	_________________________________
 	_________________________________
@@ -48,7 +48,7 @@
 	 Ohno! The description of a 'deadline' cannot be empty :(
 	_________________________________
 	_________________________________
-	 Got it! I've added this task:
+	 Got it! I've added this duke.task:
 	   [D][✘] assignment 2 (by: sunday 2359)
 	 Now you have 3 tasks in the list.
 	_________________________________
@@ -56,7 +56,7 @@
 	 Please provide all the details for this event!
 	_________________________________
 	_________________________________
-	 Got it! I've added this task:
+	 Got it! I've added this duke.task:
 	   [E][✘] section dinner (at: 6pm)
 	 Now you have 4 tasks in the list.
 	_________________________________
@@ -64,7 +64,7 @@
 	 Oops! Something went wrong. Please try again.
 	_________________________________
 	_________________________________
-	 Okiedokie! This task has been removed:
+	 Okiedokie! This duke.task has been removed:
 	   [E][✘] section dinner (at: 6pm)
 	 Now you have 3 tasks in the list.
 	_________________________________
@@ -78,9 +78,9 @@
 	 Uhm........I'm sorry I do not understand what that means.
 	_________________________________
 	 Here are the commands you can use:
-	 todo {description}........................ to add a new task
-	 deadline {description} \by {date time}.... to add a new task that needs to be done by a specific date/time
-	 event {description} \at {date time}....... to add a new task that starts and ends at a specific date/time
+	 todo {description}........................ to add a new duke.task
+	 deadline {description} \by {date time}.... to add a new duke.task that needs to be done by a specific date/time
+	 event {description} \at {date time}....... to add a new duke.task that starts and ends at a specific date/time
 	 list...................................... to see your entire to-do list
 	 delete [item num]........................... to remove item off the list
 	 done [item num]........................... to check off something you have completed

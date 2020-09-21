@@ -1,10 +1,10 @@
-package task;
+package duke.task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Represents an Event-type Task in the TaskList.
+ * Represents an Event-type Task in the duke.data.TaskList.
  * Consists of a description and a particular scheduled date/time.
  */
 public class Event extends Task {

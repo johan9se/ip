@@ -1,6 +1,9 @@
-import task.Deadline;
-import task.Event;
-import task.ToDo;
+package duke.data;
+
+import duke.data.TaskList;
+import duke.task.Deadline;
+import duke.task.Event;
+import duke.task.ToDo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,7 +24,7 @@ public class Storage {
     }
 
     /**
-     * Loads existing tasks from a file into the TaskList.
+     * Loads existing tasks from a file into the duke.data.TaskList.
      */
     public void load() {
         try {
@@ -48,7 +51,7 @@ public class Storage {
     }
 
     /**
-     * Processes existing tasks from a file and adds it into the TaskList.
+     * Processes existing tasks from a file and adds it into the duke.data.TaskList.
      */
     public void processListFromFile(String taskLine, int listNumber) {
         String[] args = taskLine.split("\\|");

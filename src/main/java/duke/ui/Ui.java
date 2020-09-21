@@ -1,7 +1,9 @@
+package duke.ui;
+
 import java.util.Scanner;
 
 /**
- * Text UI of the Duke application.
+ * Text UI of the duke.data.Duke application.
  */
 public class Ui {
     private static final String LOGO = "\t   .            *        .\n" +
@@ -13,14 +15,14 @@ public class Ui {
                                         "\t .    *   (  :  )   *\n" +
                                         "\t .. . ...  '--`-` ... *  .";
 
-    static final String GENERAL_ERROR_MESSAGE = "\t Oops! Something went wrong. Please try again.";
-    static final String INVALID_COMMAND_MESSAGE = "\t Ohno! The description of a '%s' cannot be empty :(";
-    static final String DONT_UNDERSTAND_MESSAGE = "\t Uhm........I'm sorry I do not understand what that means.\n\t Type 'help' to see all commands!";
-    static final String MISSING_DATETIME_MESSAGE = "\t Please provide a date/time for this %s description!";
-    static final String MISSING_DETAILS_MESSAGE = "\t Please provide all the details for this %s!";
-    static final String INVALID_DATETIME_FORMAT = "\t The date+time format should be {yyyy-mm-dd, HH:mm}.";
-    static final String INVALID_TIMEFRAME_MESSAGE = "\t Uh oh! %s is not a valid time frame. Try {day/week/month} instead.";
-    static final String LINE_BREAK = "\t_________________________________";
+    public static final String GENERAL_ERROR_MESSAGE = "\t Oops! Something went wrong. Please try again.";
+    public static final String INVALID_COMMAND_MESSAGE = "\t Ohno! The description of a '%s' cannot be empty :(";
+    public static final String DONT_UNDERSTAND_MESSAGE = "\t Uhm........I'm sorry I do not understand what that means.\n\t Type 'help' to see all commands!";
+    public static final String MISSING_DATETIME_MESSAGE = "\t Please provide a date/time for this %s description!";
+    public static final String MISSING_DETAILS_MESSAGE = "\t Please provide all the details for this %s!";
+    public static final String INVALID_DATETIME_FORMAT = "\t The date+time format should be {yyyy-mm-dd, HH:mm}.";
+    public static final String INVALID_TIMEFRAME_MESSAGE = "\t Uh oh! %s is not a valid time frame. Try {day/week/month} instead.";
+    public static final String LINE_BREAK = "\t_________________________________";
 
     public Ui() {
     }
@@ -47,9 +49,9 @@ public class Ui {
 
     public void printGuideMessage() {
         System.out.println("\t Here are the commands you can use:");
-        System.out.println("\t todo {description}............................... to add a new task");
-        System.out.println("\t deadline {description} \\by {yyyy-mm-dd,HH:mm}.... to add a new task that needs to be done by a specific date/time");
-        System.out.println("\t event {description} \\at {yyyy-mm-dd,HH:mm}....... to add a new task that starts and ends at a specific date/time");
+        System.out.println("\t todo {description}............................... to add a new duke.task");
+        System.out.println("\t deadline {description} \\by {yyyy-mm-dd,HH:mm}.... to add a new duke.task that needs to be done by a specific date/time");
+        System.out.println("\t event {description} \\at {yyyy-mm-dd,HH:mm}....... to add a new duke.task that starts and ends at a specific date/time");
         System.out.println("\t list............................................. to see your entire to-do list");
         System.out.println("\t upcoming <day/week/month>........................ to see what is coming up soon");
         System.out.println("\t delete [item num]................................ to remove item off the list");
