@@ -1,8 +1,11 @@
 package duke;
 
+import java.time.LocalDateTime;
+
 public class Task {
     protected String description;
     protected boolean isDone;
+    protected LocalDateTime dateTime;
 
     public Task(String description) {
         this.description = description;
@@ -15,6 +18,10 @@ public class Task {
 
     public void markAsDone() {
         this.isDone = true;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public String formatString() {
