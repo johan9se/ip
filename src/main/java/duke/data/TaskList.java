@@ -1,16 +1,17 @@
 package duke.data;
 
+import duke.data.exception.DukeException;
+import duke.data.exception.InvalidTimeFrameException;
 import duke.parser.Parser;
 import duke.task.Deadline;
 import duke.task.Event;
-import duke.task.ToDo;
 import duke.task.Task;
-import duke.data.exception.DukeException;
-import duke.data.exception.InvalidTimeFrameException;
+import duke.task.ToDo;
 import duke.ui.Ui;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -126,7 +127,7 @@ public class TaskList {
     public static void echoNewlyAddedItem(Task item) {
         System.out.println("\t Got it! I've added this duke.task:");
         System.out.println("\t   " + item.toString());
-        System.out.printf("\t Now you have " + itemsInList + " duke.task%s in the list.\n" + Ui.LINE_BREAK + "\n", (itemsInList > 1 ? "s" : ""));
+        System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n" + Ui.LINE_BREAK + "\n", (itemsInList > 1 ? "s" : ""));
     }
 
     /*
@@ -175,14 +176,20 @@ public class TaskList {
         ui.printLineBreak();
     }
 
+    /**
+     * List out and number all Tasks in the Tasklist which contain a particular keyword.
+     *
+     * @param keyword user input keyword to search for
+     */
     public static void findAndListTasks(String keyword) {
         if (!keyword.isEmpty()) {
+            System.out.println("\t These tasks contain the keyword: '" + keyword + "'");
             AtomicInteger i = new AtomicInteger(1);
             taskList.stream().filter((t) -> t.contains(keyword))
-                    .forEach((t) -> System.out.println(i.getAndIncrement() + ". " + t.toString()));
+                    .forEach((t) -> System.out.println("\t " + i.getAndIncrement() + ". " + t.toString()));
 
             if (i.get() == 1) {
-                System.out.println("No tasks containing '" + keyword + "' are found!");
+                System.out.println("\t No tasks containing '" + keyword + "' are found!");
             }
             ui.printLineBreak();
         } else {
@@ -190,10 +197,16 @@ public class TaskList {
         }
     }
 
+    /**
+     * List out and number upcoming Tasks within a given time frame.
+     *
+     * @param timeFrame user input timeframe
+     */
     public static void listUpcomingTasks(String timeFrame) {
         try {
             LocalDateTime[] dateRange = Parser.getStartAndEndDate(timeFrame);
             ArrayList<Task> upcomingTasks = getUpcomingTasks(dateRange[0], dateRange[1]);
+            upcomingTasks.sort(Comparator.comparing(Task::getDateTime));
 
             if (!upcomingTasks.isEmpty()) {
                 System.out.println("\t Here are the upcoming tasks for the " + timeFrame);

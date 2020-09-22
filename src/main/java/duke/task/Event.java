@@ -36,8 +36,14 @@ public class Event extends Task {
         return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm"));
     }
 
+    public String formatDateWithFullMonth(LocalDateTime dateTime) {
+        return dateTime.format(DateTimeFormatter.ofPattern("MMMM d yyyy, HH:mm"));
+    }
+
     @Override
     public boolean contains(String keyword) {
-        return super.contains(keyword) || at.toString().contains(keyword);
+        return super.contains(keyword)
+                || at.toString().toLowerCase().contains(keyword)
+                || formatDateWithFullMonth(at).toLowerCase().contains(keyword);
     }
 }

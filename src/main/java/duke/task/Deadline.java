@@ -36,8 +36,14 @@ public class Deadline extends Task {
         return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm"));
     }
 
+    public String formatDateWithFullMonth(LocalDateTime dateTime) {
+        return dateTime.format(DateTimeFormatter.ofPattern("MMMM d yyyy, HH:mm"));
+    }
+
     @Override
     public boolean contains(String keyword) {
-        return super.contains(keyword) || by.toString().contains(keyword);
+        return super.contains(keyword)
+                || by.toString().toLowerCase().contains(keyword)
+                || formatDateWithFullMonth(by).toLowerCase().contains(keyword);
     }
 }

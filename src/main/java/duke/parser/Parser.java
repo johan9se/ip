@@ -58,7 +58,7 @@ public class Parser {
                 TaskList.listUpcomingTasks(commandArgs);
                 break;
             case COMMAND_FIND_WORD:
-                TaskList.findAndListTasks(commandArgs);
+                TaskList.findAndListTasks(commandArgs.toLowerCase());
                 break;
             case COMMAND_DONE_WORD:
                 TaskList.markTaskAsDone(commandArgs);

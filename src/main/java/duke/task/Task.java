@@ -37,6 +37,6 @@ public class Task {
     }
 
     public boolean contains(String keyword) {
-        return description.contains(keyword);
+        return description.toLowerCase().contains(keyword);
     }
 }
