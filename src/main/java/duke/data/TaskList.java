@@ -275,8 +275,10 @@ public class TaskList {
      */
     public static void printDoneMessage(String listNumber) {
         int taskID = Integer.parseInt(listNumber) - 1;
-        System.out.println("\t Nice! I've marked this duke.task as done:");
-        System.out.println("\t   " + taskList.get(taskID).toString());
-        ui.printLineBreak();
+        if (0 <= taskID && taskID < itemsInList) {
+            System.out.println("\t Nice! I've marked this duke.task as done:");
+            System.out.println("\t   " + taskList.get(taskID).toString());
+            ui.printLineBreak();
+        }
     }
 }
