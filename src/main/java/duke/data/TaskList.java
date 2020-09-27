@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Represents the duke.data.TaskList. Contains the list of Task objects.
+ * Represents the TaskList. Contains the list of Task objects.
  */
 public class TaskList {
 
@@ -45,8 +45,8 @@ public class TaskList {
      */
 
     /**
-     * Add newly input Task into the duke.data.TaskList and
-     * increment the number of items in the duke.data.TaskList.
+     * Add newly input Task into the TaskList and
+     * increment the number of items in the TaskList.
      *
      * @param item represents the Task object.
      */
@@ -56,7 +56,7 @@ public class TaskList {
     }
 
     /**
-     * Add newly input Todo into the duke.data.TaskList.
+     * Add newly input Todo into the TaskList.
      *
      * @param args the description of the Todo object.
      * @param isNew indicates that the Task is a new input, not loaded from an existing file
@@ -70,7 +70,7 @@ public class TaskList {
     }
 
     /**
-     * Add newly input Deadline into the duke.data.TaskList.
+     * Add newly input Deadline into the TaskList.
      *
      * @param args the description of the Deadline object.
      * @param isNew indicates that the Task is a new input, not loaded from an existing file
@@ -95,7 +95,7 @@ public class TaskList {
     }
 
     /**
-     * Add newly input Event into the duke.data.TaskList.
+     * Add newly input Event into the TaskList.
      *
      * @param args the description of the Event object.
      * @param isNew indicates that the Task is a new input, not loaded from an existing file
@@ -130,7 +130,7 @@ public class TaskList {
      * @param item represents the Task object.
      */
     public static void echoNewlyAddedItem(Task item) {
-        System.out.println("\t Got it! I've added this duke.task:");
+        System.out.println("\t Got it! I've added this task:");
         System.out.println("\t   " + item.toString());
         System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n" + Ui.LINE_BREAK + "\n", (itemsInList > 1 ? "s" : ""));
     }
@@ -142,7 +142,7 @@ public class TaskList {
      */
 
     /**
-     * Delete Task from duke.data.TaskList.
+     * Delete Task from TaskList.
      *
      * @param listNumber numerical position of Task object on the duke.data.TaskList.
      */
@@ -257,7 +257,7 @@ public class TaskList {
     /**
      * Mark a particular Task item as done.
      *
-     * @param listNumber numerical position of Task object on the duke.data.TaskList.
+     * @param listNumber numerical position of Task object on the TaskList.
      */
     public static void markTaskAsDone(String listNumber) {
         int taskID = Integer.parseInt(listNumber) - 1;
@@ -271,7 +271,7 @@ public class TaskList {
     /**
      * Acknowledge and display which Task item has been marked as done.
      *
-     * @param listNumber numerical position of Task object on the duke.data.TaskList.
+     * @param listNumber numerical position of Task object on the TaskList.
      */
     public static void printDoneMessage(String listNumber) {
         int taskID = Integer.parseInt(listNumber) - 1;
