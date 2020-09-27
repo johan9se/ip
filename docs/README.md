@@ -16,11 +16,10 @@ Examples:
 * `todo CS2113T homework`
 * `todo clean room`
 
-### Adding a Deadline: `deadline`
+### Add a Deadline: `deadline`
 Adds a Deadline to the task list
 
-Format: `deadline DESCRIPTION /by DATE_TIME`
-`DATE_TIME` Format: ``
+Format: `deadline DESCRIPTION /by DATE_TIME<yyyy-mm-dd HH:mm>`
 
 Example:
 * `deadline iP final submission /by 2020-10-02 23:59`
@@ -28,7 +27,7 @@ Example:
 ### Add an Event: `event`
 Adds an Event to the task list
 
-Format: `event DESCRIPTION /at START_DATE_TIME /to END_DATE_TIME`
+Format: `event DESCRIPTION /at START_DATE_TIME<yyyy-mm-dd HH:mm> /to END_DATE_TIME<yyyy-mm-dd HH:mm>`
 
 Example:
 * `event CS2113T exam /at 2020-12-01 13:00 /to 2020-12-01 14:00`
@@ -38,7 +37,7 @@ Shows all the tasks in the task list
 
 Format: `list`
 
-### List upcoming tasks
+### List upcoming tasks: `upcoming`
 Shows a list of all tasks due/happening within a certain time frame.
 
 Format: `upcoming TIME_FRAME`
@@ -49,7 +48,7 @@ Example:
 * `upcoming month`
 
 ### Filter tasks by name: `find`
-Find tasks with a description that contains any of the given keywords.
+Find tasks with a description that contains a given keyword.
 
 Format: `find KEYWORD`
 
@@ -77,10 +76,10 @@ Exits the program
 
 Format: `bye`
 
-### Saving the data into hard drive
+### Save data into hard drive
 Duke saves all data in the task list automatically after any command that modifies the data. There is no need to save manually.
 
-## Command summary
+## Command Summary
 Command | Format, Examples
 -------|-----------------
 help|`help`

@@ -108,7 +108,7 @@ public class Parser {
      */
     public static String[] splitDescriptionAndDateTime (String args) throws DukeException {
         String description = args.substring(0, args.indexOf("\\")).trim();
-        String dateTimeString = formatDateAndTimeInput(args.substring(args.indexOf("\\")+3).trim());
+        String dateTimeString = args.substring(args.indexOf("\\")+3).trim();
         String[] details = {description, dateTimeString};
         if (description.isEmpty() || dateTimeString.isEmpty()) {
             throw new DukeException();
@@ -142,7 +142,7 @@ public class Parser {
         return dateTimeString;
     }
 
-    public static LocalDateTime getDateTimeDescription(String inputDateTime) {
+    public static LocalDateTime getDateTime(String inputDateTime) {
         return LocalDateTime.parse(inputDateTime);
     }
 

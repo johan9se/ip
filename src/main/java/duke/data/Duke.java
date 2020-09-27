@@ -24,7 +24,6 @@ public class Duke {
 
     public void run() {
         ui.printGreeting();
-        ui.printGuideMessage();
         storage.load();
 
         String inputLine;

@@ -79,7 +79,7 @@ public class TaskList {
         try {
             String description = Parser.splitDescriptionAndDateTime(args)[0];
             String byDateTimeString = Parser.formatDateAndTimeInput(Parser.splitDescriptionAndDateTime(args)[1]);
-            LocalDateTime byDateTime = Parser.getDateTimeDescription(byDateTimeString);
+            LocalDateTime byDateTime = Parser.getDateTime(byDateTimeString);
 
             Task deadline = new Deadline(description, byDateTime);
             addNewListItem(deadline);
@@ -105,11 +105,11 @@ public class TaskList {
             String[] details = Parser.splitDescriptionAndDateTime(args);
             String description = details[0];
             String[] dateTimeRange = Parser.splitStartAndEndDateTime(details[1]);
-            String startDateTimeString = Parser.formatDateAndTimeInput(dateTimeRange[0]);
-            String endDateTimeString = Parser.formatDateAndTimeInput(dateTimeRange[1]);
+            String startDateTimeString = dateTimeRange[0];
+            String endDateTimeString = dateTimeRange[1];
 
-            LocalDateTime startDateTime = Parser.getDateTimeDescription(startDateTimeString);
-            LocalDateTime endDateTime = Parser.getDateTimeDescription(endDateTimeString);
+            LocalDateTime startDateTime = Parser.getDateTime(startDateTimeString);
+            LocalDateTime endDateTime = Parser.getDateTime(endDateTimeString);
 
             Task event = new Event(description, startDateTime, endDateTime);
             addNewListItem(event);
@@ -184,22 +184,23 @@ public class TaskList {
     /**
      * List out and number all Tasks in the Tasklist which contain a particular keyword.
      *
-     * @param keyword user input keyword to search for
+     * @param searchString user input keyword to search for
      */
-    public static void findAndListTasks(String keyword) {
-        if (!keyword.isEmpty()) {
-            System.out.println("\t These tasks contain the keyword: '" + keyword + "'");
+    public static void findAndListTasks(String searchString) {
+        if (!searchString.isEmpty()) {
+            System.out.println("\t These tasks contain the keyword(s): '" + searchString + "'");
             AtomicInteger i = new AtomicInteger(1);
-            taskList.stream().filter((t) -> t.contains(keyword))
+
+            taskList.stream().filter((t) -> t.contains(searchString))
                     .forEach((t) -> System.out.println("\t " + i.getAndIncrement() + ". " + t.toString()));
 
             if (i.get() == 1) {
-                System.out.println("\t No tasks containing '" + keyword + "' are found!");
+                System.out.println("\t No tasks containing '" + searchString + "' are found!");
             }
-            ui.printLineBreak();
         } else {
             ui.printErrorMessage(Ui.MISSING_DETAILS_MESSAGE, "search query");
         }
+        ui.printLineBreak();
     }
 
     /**
@@ -214,7 +215,7 @@ public class TaskList {
             upcomingTasks.sort(Comparator.comparing(Task::getDateTime));
 
             if (!upcomingTasks.isEmpty()) {
-                System.out.println("\t Here are the upcoming tasks for the " + timeFrame);
+                System.out.println("\t Here are the upcoming tasks for the " + timeFrame + ":");
                 int i = 1;
                 for (Task t : upcomingTasks) {
                     System.out.println("\t" + (i++) + ". " + t.toString());

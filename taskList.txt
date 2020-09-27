@@ -1,1 +1,5 @@
- E | false | asdhan | 2020-10-02T06:00 \to 2020-10-02T07:00
+ E | false | this | 2020-10-01T10:00 \to 2020-10-10T11:00
+ T | true | this
+ T | false | homework
+ T | false | thing
+ D | false | ausdhjan | 2020-10-02T05:00

@@ -20,7 +20,7 @@ public class Ui {
     public static final String DONT_UNDERSTAND_MESSAGE = "\t Uhm........I'm sorry I do not understand what that means.\n\t Type 'help' to see all commands!";
     public static final String MISSING_DATETIME_MESSAGE = "\t Please provide a date/time for this %s description!";
     public static final String MISSING_DETAILS_MESSAGE = "\t Please provide all the details for this %s!";
-    public static final String INVALID_DATETIME_FORMAT = "\t The date+time format should be {yyyy-mm-dd, HH:mm}.";
+    public static final String INVALID_DATETIME_FORMAT = "\t The date+time format should be {yyyy-mm-dd HH:mm}.";
     public static final String INVALID_TIMEFRAME_MESSAGE = "\t Uh oh! %s is not a valid time frame. Try {day/week/month} instead.";
     public static final String LINE_BREAK = "\t_________________________________";
 
@@ -34,7 +34,8 @@ public class Ui {
     public void printGreeting() {
         System.out.println(LOGO);
         printLineBreak();
-        System.out.println("\t Hi! I'm Olaf!\n\t What can I do for you?");
+        System.out.println("\t Hi! I'm Olaf!\n\t What can I do for you today?");
+        System.out.println("\t Type 'help' to see all the commands you can use!");
         printLineBreak();
     }
 
@@ -49,15 +50,15 @@ public class Ui {
 
     public void printGuideMessage() {
         System.out.println("\t Here are the commands you can use:");
-        System.out.println("\t todo {description}............................... to add a new duke.task");
-        System.out.println("\t deadline {description} \\by {yyyy-mm-dd HH:mm}.... to add a new duke.task that needs to be done by a specific date/time");
-        System.out.println("\t event {description} \\at {yyyy-mm-dd HH:mm}....... to add a new duke.task that starts and ends at a specific date/time");
-        System.out.println("\t list............................................. to see your entire to-do list");
-        System.out.println("\t upcoming <day/week/month>........................ to see what is coming up soon");
-        System.out.println("\t delete [item num]................................ to remove item off the list");
-        System.out.println("\t done [item num].................................. to check off something you have completed");
-        System.out.println("\t find [keyword]................................... to see which tasks contain a particular keyword");
-        System.out.println("\t bye.............................................. see you later alligator!");
+        System.out.println("\t todo {description}...................................................... to add a new task");
+        System.out.println("\t deadline {description} \\by {yyyy-mm-dd HH:mm}........................... to add a new deadline");
+        System.out.println("\t event {description} \\at {yyyy-mm-dd HH:mm} \\to {yyyy-mm-dd HH:mm}....... to add a new event that starts and ends at a specific date/time");
+        System.out.println("\t list.................................................................... to see your entire to-do list");
+        System.out.println("\t upcoming <day/week/month>............................................... to see what is coming up soon");
+        System.out.println("\t delete [item num]....................................................... to remove an item off the list");
+        System.out.println("\t done [item num]......................................................... to check off something you have completed");
+        System.out.println("\t find [keyword].......................................................... to see which tasks contain a particular keyword");
+        System.out.println("\t bye..................................................................... see you later alligator!");
         printLineBreak();
     }
 
