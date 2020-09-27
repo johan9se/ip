@@ -50,8 +50,8 @@ public class Ui {
     public void printGuideMessage() {
         System.out.println("\t Here are the commands you can use:");
         System.out.println("\t todo {description}............................... to add a new duke.task");
-        System.out.println("\t deadline {description} \\by {yyyy-mm-dd,HH:mm}.... to add a new duke.task that needs to be done by a specific date/time");
-        System.out.println("\t event {description} \\at {yyyy-mm-dd,HH:mm}....... to add a new duke.task that starts and ends at a specific date/time");
+        System.out.println("\t deadline {description} \\by {yyyy-mm-dd HH:mm}.... to add a new duke.task that needs to be done by a specific date/time");
+        System.out.println("\t event {description} \\at {yyyy-mm-dd HH:mm}....... to add a new duke.task that starts and ends at a specific date/time");
         System.out.println("\t list............................................. to see your entire to-do list");
         System.out.println("\t upcoming <day/week/month>........................ to see what is coming up soon");
         System.out.println("\t delete [item num]................................ to remove item off the list");

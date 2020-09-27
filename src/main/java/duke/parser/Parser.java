@@ -117,14 +117,26 @@ public class Parser {
     }
 
     /**
+     * Separate the start date and end date of a given Event,
+     * returned as an array.
+     *
+     * @param args String format of start and end date/time.
+     */
+    public static String[] splitStartAndEndDateTime (String args) {
+        String start = formatDateAndTimeInput(args.substring(0, args.indexOf("\\to")).trim());
+        String end = formatDateAndTimeInput(args.substring(args.indexOf("\\to")+3).trim());
+        return new String[]{start, end};
+    }
+
+    /**
      * Convert input date/time string into a format that can
      * be parsed into a LocalDateTime object.
      */
     public static String formatDateAndTimeInput(String dateTimeString) {
-        String[] args = dateTimeString.split(",", 2);
+        String[] args = dateTimeString.split(" ", 2);
         if (args.length > 1) {
-            String date = args[0].trim();
-            String time = args[1].trim();
+            String date = args[0];
+            String time = args[1];
             return date + "T" + time;
         }
         return dateTimeString;
@@ -139,7 +151,7 @@ public class Parser {
      *
      * @param timeFrame String input indicating date/time range
      */
-    public static LocalDateTime[] getStartAndEndDate(String timeFrame) throws InvalidTimeFrameException {
+    public static LocalDateTime[] getTimeFrame(String timeFrame) throws InvalidTimeFrameException {
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = null;
         switch (timeFrame) {

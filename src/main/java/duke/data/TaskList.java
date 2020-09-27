@@ -102,11 +102,16 @@ public class TaskList {
      */
     public static void addNewEvent(String args, boolean isNew) {
         try {
-            String description = Parser.splitDescriptionAndDateTime(args)[0];
-            String atDateTimeString = Parser.formatDateAndTimeInput(Parser.splitDescriptionAndDateTime(args)[1]);
-            LocalDateTime atDateTime = Parser.getDateTimeDescription(atDateTimeString);
+            String[] details = Parser.splitDescriptionAndDateTime(args);
+            String description = details[0];
+            String[] dateTimeRange = Parser.splitStartAndEndDateTime(details[1]);
+            String startDateTimeString = Parser.formatDateAndTimeInput(dateTimeRange[0]);
+            String endDateTimeString = Parser.formatDateAndTimeInput(dateTimeRange[1]);
 
-            Task event = new Event(description, atDateTime);
+            LocalDateTime startDateTime = Parser.getDateTimeDescription(startDateTimeString);
+            LocalDateTime endDateTime = Parser.getDateTimeDescription(endDateTimeString);
+
+            Task event = new Event(description, startDateTime, endDateTime);
             addNewListItem(event);
 
             if (isNew) {
@@ -204,7 +209,7 @@ public class TaskList {
      */
     public static void listUpcomingTasks(String timeFrame) {
         try {
-            LocalDateTime[] dateRange = Parser.getStartAndEndDate(timeFrame);
+            LocalDateTime[] dateRange = Parser.getTimeFrame(timeFrame);
             ArrayList<Task> upcomingTasks = getUpcomingTasks(dateRange[0], dateRange[1]);
             upcomingTasks.sort(Comparator.comparing(Task::getDateTime));
 

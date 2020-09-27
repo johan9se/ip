@@ -11,10 +11,12 @@ public class Event extends Task {
     public static final String EVENT_MARKER = "E";
 
     protected LocalDateTime at;
+    protected LocalDateTime to;
 
-    public Event(String description, LocalDateTime at) {
+    public Event(String description, LocalDateTime at, LocalDateTime to) {
         super(description);
         this.at = at;
+        this.to = to;
     }
 
     @Override
@@ -24,12 +26,12 @@ public class Event extends Task {
 
     @Override
     public String formatString() {
-        return " " + EVENT_MARKER + " " + super.formatString() + " | " + at;
+        return " " + EVENT_MARKER + " " + super.formatString() + " | " + at + " \\to " + to;
     }
 
     @Override
     public String toString() {
-        return "[" + EVENT_MARKER + "]" + super.toString() + " (at: " + formatDate(at) + ")";
+        return "[" + EVENT_MARKER + "]" + super.toString() + " (at: " + formatDate(at) + " - " + formatDate(to) + ")";
     }
 
     public String formatDate(LocalDateTime dateTime) {
@@ -44,6 +46,8 @@ public class Event extends Task {
     public boolean contains(String keyword) {
         return super.contains(keyword)
                 || at.toString().toLowerCase().contains(keyword)
-                || formatDateWithFullMonth(at).toLowerCase().contains(keyword);
+                || formatDateWithFullMonth(at).toLowerCase().contains(keyword)
+                || to.toString().toLowerCase().contains(keyword)
+                || formatDateWithFullMonth(to).toLowerCase().contains(keyword);
     }
 }

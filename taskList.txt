@@ -1,13 +1,1 @@
- T | false | this
- T | true | this
- D | false | stuff | 2019-10-03T06:30
- E | true | pancake dinner | 2020-09-24T05:30
- D | true | homework | 2020-09-28T00:00
- D | false | homework 2 | 2020-09-28T10:03
- D | true | a | 2020-09-21T06:30
- D | true | a | 2020-09-21T06:31
- D | false | a | 2020-09-21T06:40
- D | false | a | 2020-09-22T04:30
- T | false | this
- D | false | iP submission | 2020-10-02T23:59
- D | false | thingything | 2020-09-28T03:10
+ E | false | asdhan | 2020-10-02T06:00 \to 2020-10-02T07:00
