@@ -5,7 +5,7 @@ import duke.ui.Ui;
 import java.io.IOException;
 
 /**
- * Entry point of the duke.data.Duke application.
+ * Entry point of the Duke application.
  * Initializes the application and starts the interaction with the user.
  */
 public class Duke {

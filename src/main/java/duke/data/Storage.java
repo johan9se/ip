@@ -22,10 +22,12 @@ public class Storage {
         this.filePath = filePath;
     }
 
-
+    public String getFilePath() {
+        return filePath;
+    }
 
     /**
-     * Loads existing tasks from a file into the duke.data.TaskList.
+     * Loads existing tasks from a file into the TaskList.
      */
     public void load() {
         try {
@@ -52,7 +54,7 @@ public class Storage {
     }
 
     /**
-     * Processes existing tasks from a file and adds it into the duke.data.TaskList.
+     * Processes existing tasks from a file and adds it into the TaskList.
      */
     public void processListFromFile(String taskLine, int listNumber) {
         String[] args = taskLine.split("\\|");

@@ -153,7 +153,7 @@ public class Parser {
      */
     public static LocalDateTime[] getTimeFrame(String timeFrame) throws InvalidTimeFrameException {
         LocalDateTime startDate = LocalDateTime.now();
-        LocalDateTime endDate = null;
+        LocalDateTime endDate;
         switch (timeFrame) {
         case DAY_TIMEFRAME:
             endDate = startDate.plus(1, ChronoUnit.DAYS);

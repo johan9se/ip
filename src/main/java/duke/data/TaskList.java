@@ -144,7 +144,7 @@ public class TaskList {
      */
 
     /**
-     * Delete Task from TaskList.
+     * Delete a particular Task from TaskList.
      *
      * @param listNumber numerical position of Task object on the TaskList.
      */
