@@ -32,7 +32,7 @@ public class Duke {
             ui.printLineBreak();
             tasks.accessTaskList(inputLine);
             try {
-                storage.writeToFile(storage.filePath, storage.formatList());
+                storage.writeToFile(storage.getFilePath(), storage.formatList());
             } catch (IOException e) {
                 System.out.println("Something went wrong: " + e.getMessage());
             }

@@ -135,6 +135,8 @@ public class TaskList {
         System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n" + Ui.LINE_BREAK + "\n", (itemsInList > 1 ? "s" : ""));
     }
 
+
+
     /*
      * ===========================================
      *          DELETING FROM TASKLIST
@@ -144,7 +146,7 @@ public class TaskList {
     /**
      * Delete Task from TaskList.
      *
-     * @param listNumber numerical position of Task object on the duke.data.TaskList.
+     * @param listNumber numerical position of Task object on the TaskList.
      */
     public static void deleteItem(String listNumber) {
         int taskID = Integer.parseInt(listNumber) - 1;
@@ -158,6 +160,7 @@ public class TaskList {
             ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
         }
     }
+
 
 
     /*
@@ -232,6 +235,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Store upcoming tasks found in a given time frame into an ArrayList
+     **/
     public static ArrayList<Task> getUpcomingTasks(LocalDateTime startDate, LocalDateTime endDate) {
         ArrayList<Task> upcomingTasks = new ArrayList<>();
         for (int i = 0; i < itemsInList; i++) {
@@ -276,7 +282,7 @@ public class TaskList {
     public static void printDoneMessage(String listNumber) {
         int taskID = Integer.parseInt(listNumber) - 1;
         if (0 <= taskID && taskID < itemsInList) {
-            System.out.println("\t Nice! I've marked this duke.task as done:");
+            System.out.println("\t Nice! I've marked this task as done:");
             System.out.println("\t   " + taskList.get(taskID).toString());
             ui.printLineBreak();
         }
