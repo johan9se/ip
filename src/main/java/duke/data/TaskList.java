@@ -151,10 +151,10 @@ public class TaskList {
     public static void deleteItem(String listNumber) {
         int taskID = Integer.parseInt(listNumber) - 1;
         if (0 <= taskID && taskID < itemsInList) {
-            System.out.println("\t Okiedokie! This duke.task has been removed:");
+            System.out.println("\t Okiedokie! This task has been removed:");
             System.out.println("\t   " + taskList.remove(taskID).toString());
             itemsInList--;
-            System.out.printf("\t Now you have " + itemsInList + " duke.task%s in the list.\n", (itemsInList == 1 ? "s" : ""));
+            System.out.printf("\t Now you have " + itemsInList + " task%s in the list.\n", (itemsInList == 1 ? "" : "s"));
             ui.printLineBreak();
         } else {
             ui.printErrorMessage(Ui.GENERAL_ERROR_MESSAGE);
