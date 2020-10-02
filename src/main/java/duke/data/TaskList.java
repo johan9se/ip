@@ -237,6 +237,9 @@ public class TaskList {
 
     /**
      * Store upcoming tasks found in a given time frame into an ArrayList
+     *
+     * @param startDate date at which the task begins
+     * @param endDate date at which the task ends
      **/
     public static ArrayList<Task> getUpcomingTasks(LocalDateTime startDate, LocalDateTime endDate) {
         ArrayList<Task> upcomingTasks = new ArrayList<>();

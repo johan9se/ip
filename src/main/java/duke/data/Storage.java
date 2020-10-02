@@ -42,6 +42,8 @@ public class Storage {
 
     /**
      * Reads contents of a file.
+     *
+     * @param filePath set file path of the file to read from.
      */
     public void readFromFile(String filePath) throws FileNotFoundException {
         File f = new File(filePath);
@@ -55,6 +57,9 @@ public class Storage {
 
     /**
      * Processes existing tasks from a file and adds it into the TaskList.
+     *
+     * @param taskLine line to process from file
+     * @param listNumber the line number of the current item being processed
      */
     public void processListFromFile(String taskLine, int listNumber) {
         String[] args = taskLine.split("\\|");

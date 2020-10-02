@@ -90,6 +90,7 @@ public class Parser {
      * Separate the command word from the full input line.
      *
      * @param rawUserInput full line entered by the user.
+     * @throws DukeException if todo/deadline/event command are missing parameters
      * @return array containing the command word, and the rest of the input line.
      */
     public static String[] splitCommandWordAndArgs (String rawUserInput) throws DukeException {
@@ -105,6 +106,8 @@ public class Parser {
      * returned as an array.
      *
      * @param args the full user input, excluding the command
+     * @throws DukeException if there are missing details in the input
+     * @return description and dateTimeString in an Array
      */
     public static String[] splitDescriptionAndDateTime (String args) throws DukeException {
         String description = args.substring(0, args.indexOf("\\")).trim();
@@ -150,6 +153,8 @@ public class Parser {
      * Get the relevant LocalDateTime values for a particular input time frame.
      *
      * @param timeFrame String input indicating date/time range
+     * @throws InvalidTimeFrameException if given time frame does not match possible options
+     * @returns time frame in the form of an array
      */
     public static LocalDateTime[] getTimeFrame(String timeFrame) throws InvalidTimeFrameException {
         LocalDateTime startDate = LocalDateTime.now();
