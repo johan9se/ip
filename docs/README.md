@@ -19,18 +19,18 @@ Examples:
 ### Add a Deadline: `deadline`
 Adds a Deadline to the task list
 
-Format: `deadline DESCRIPTION /by DATE_TIME<yyyy-mm-dd HH:mm>`
+Format: `deadline DESCRIPTION \by DATE_TIME<yyyy-mm-dd HH:mm>`
 
 Example:
-* `deadline iP final submission /by 2020-10-02 23:59`
+* `deadline iP final submission \by 2020-10-02 23:59`
 
 ### Add an Event: `event`
 Adds an Event to the task list
 
-Format: `event DESCRIPTION /at START_DATE_TIME<yyyy-mm-dd HH:mm> /to END_DATE_TIME<yyyy-mm-dd HH:mm>`
+Format: `event DESCRIPTION \at START_DATE_TIME<yyyy-mm-dd HH:mm> /to END_DATE_TIME<yyyy-mm-dd HH:mm>`
 
 Example:
-* `event CS2113T exam /at 2020-12-01 13:00 /to 2020-12-01 14:00`
+* `event CS2113T exam \at 2020-12-01 13:00 /to 2020-12-01 14:00`
 
 ### List all tasks: `list`
 Shows all the tasks in the task list
@@ -86,8 +86,8 @@ help|`help`
 list|`list`
 upcoming|`upcoming day/week/month`
 todo|`todo DESCRIPTION` e.g., `todo homework`
-deadline|`deadline DESCRIPTION /by DATE_TIME` e.g., `deadline iP final submission /by 2020-10-02 23:59`
-event|`event DESCRIPTION /at FROM_DATE_TIME /to TO_DATE_TIME` e.g., `event CS2113T exam /at 2020-12-01 13:00 /to 2020-12-01 14:00`
+deadline|`deadline DESCRIPTION \by DATE_TIME` e.g., `deadline iP final submission \by 2020-10-02 23:59`
+event|`event DESCRIPTION \at FROM_DATE_TIME \to TO_DATE_TIME` e.g., `event CS2113T exam \at 2020-12-01 13:00 \to 2020-12-01 14:00`
 find|`find KEYWORD` e.g., `find September` `find assignment`
 delete|`delete INDEX` e.g., `delete 9`
 done|`done INDEX` e.g., `done 9`
