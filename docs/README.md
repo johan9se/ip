@@ -27,10 +27,10 @@ Example:
 ### Add an Event: `event`
 Adds an Event to the task list
 
-Format: `event DESCRIPTION \at START_DATE_TIME<yyyy-mm-dd HH:mm> /to END_DATE_TIME<yyyy-mm-dd HH:mm>`
+Format: `event DESCRIPTION \at START_DATE_TIME<yyyy-mm-dd HH:mm> \to END_DATE_TIME<yyyy-mm-dd HH:mm>`
 
 Example:
-* `event CS2113T exam \at 2020-12-01 13:00 /to 2020-12-01 14:00`
+* `event CS2113T exam \at 2020-12-01 13:00 \to 2020-12-01 14:00`
 
 ### List all tasks: `list`
 Shows all the tasks in the task list
@@ -80,15 +80,15 @@ Format: `bye`
 Duke saves all data in the task list automatically after any command that modifies the data. There is no need to save manually.
 
 ## Command Summary
-Command | Format, Examples
--------|-----------------
-help|`help`
-list|`list`
-upcoming|`upcoming day/week/month`
-todo|`todo DESCRIPTION` e.g., `todo homework`
-deadline|`deadline DESCRIPTION \by DATE_TIME` e.g., `deadline iP final submission \by 2020-10-02 23:59`
-event|`event DESCRIPTION \at FROM_DATE_TIME \to TO_DATE_TIME` e.g., `event CS2113T exam \at 2020-12-01 13:00 \to 2020-12-01 14:00`
-find|`find KEYWORD` e.g., `find September` `find assignment`
-delete|`delete INDEX` e.g., `delete 9`
-done|`done INDEX` e.g., `done 9`
-bye|`bye`
+|Command | Format, Examples|
+|-------|-----------------
+|help|`help`|
+|list|`list`|
+|upcoming|`upcoming day/week/month`|
+|todo|`todo DESCRIPTION` e.g., `todo homework`|
+|deadline|`deadline DESCRIPTION \by DATE_TIME` e.g., `deadline iP final submission \by 2020-10-02 23:59`|
+|event|`event DESCRIPTION \at FROM_DATE_TIME \to TO_DATE_TIME` e.g., `event CS2113T exam \at 2020-12-01 13:00 \to 2020-12-01 14:00`|
+|find|`find KEYWORD` e.g., `find September` `find assignment`|
+|delete|`delete INDEX` e.g., `delete 9`|
+|done|`done INDEX` e.g., `done 9`|
+|bye|`bye`|
